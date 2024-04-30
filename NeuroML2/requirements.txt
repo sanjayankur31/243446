@@ -1,0 +1,6 @@
+pyneuroml[neuron]
+pyneuroml[vispy]
+flake8
+black
+mypy
+pre-commit
