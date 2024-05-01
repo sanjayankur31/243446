@@ -46,6 +46,16 @@ Contact: akemann@brain.riken.jp
               <rdf:Description rdf:about="Kv1">
                 <dc:title>NeuroML conversion of Kv1 channel from Zang et al</dc:title>
                 <dc:description>Voltage-gated low threshold potassium current from Kv1 subunits</dc:description>
+                <bqbiol:is>
+                  <rdf:Bag>
+                <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/nifext_2511"/>
+                  </rdf:Bag>
+                </bqbiol:is>
+                <bqbiol:is>
+                  <rdf:Bag>
+                <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/nifext_2673"/>
+                  </rdf:Bag>
+                </bqbiol:is>
                 <bqbiol:isPartOf>
                   <rdf:Bag>
                     <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/sao471801888"/>
