@@ -80,7 +80,7 @@ FUNCTION peakab(cai (mM))  {
 
 
 FUNCTION taufunc(v (mV)) {
-	 taufunc = 1 / (          (10*(exp(-v/63.6) + exp (-(150-v)/63.6)))  - 5.2                  )
+	 taufunc = 1 / ((10*(exp(-v/63.6) + exp (-(150-v)/63.6)))  - 5.2)
 	 if (taufunc <= 0.2) {	  : stop the function between 0.2 and 1
 	    taufunc = 0.2
 	 }
