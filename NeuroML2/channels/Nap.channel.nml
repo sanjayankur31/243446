@@ -14,6 +14,11 @@
               <rdf:Description rdf:about="Nap">
                 <dc:title>NeuroML conversion of Nap channel from Zang et al</dc:title>
                 <dc:description>A persistent Na current</dc:description>
+                <bqbiol:is>
+                  <rdf:Bag>
+                <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/nifext_2508"/>
+                  </rdf:Bag>
+                </bqbiol:is>
                 <bqbiol:isPartOf>
                   <rdf:Bag>
                     <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/sao471801888"/>
