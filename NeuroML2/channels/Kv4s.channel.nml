@@ -18,6 +18,16 @@ Yunliang Zang April 16th 2015
               <rdf:Description rdf:about="Kv4s">
                 <dc:title>NeuroML conversion of Kv4s channel from Zang et al</dc:title>
                 <dc:description>Voltage-gated potassium channel with high threshold and fast activation/deactivation kinetics</dc:description>
+                <bqbiol:is>
+                  <rdf:Bag>
+                <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/nifext_2511"/>
+                  </rdf:Bag>
+                </bqbiol:is>
+                <bqbiol:is>
+                  <rdf:Bag>
+                <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/nifext_2735"/>
+                  </rdf:Bag>
+                </bqbiol:is>
                 <bqbiol:isPartOf>
                   <rdf:Bag>
                     <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/sao471801888"/>
