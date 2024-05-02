@@ -95,14 +95,15 @@ However, to make slow component function during the ISI, here the Q10 correction
         <Constant name="CONC_SCALE" dimension="concentration" value="1 mM" />
         <Dynamics>
             <DerivedVariable name="V" dimension="none" value="v/VOLT_SCALE" />
+            <DerivedVariable name="BASE" dimension="none" value="base/VOLT_SCALE" />
             <DerivedVariable name="ca_conc" dimension="none" value="caConc/CONC_SCALE" />
             <DerivedVariable name="vv" dimension="none" value="V + 100 - (25 - 55.7 + 136.9 * exp(-0.28 * ca_conc * 1E3))" />
             <DerivedVariable name="abt" dimension="none" value="1/(10 * (exp(-vv/63.6) + exp(-(150 - vv)/63.6)) - 5.2)" />
-            <DerivedVariable name="range" dimension="none" value="(13.7 + 234 * exp(-0.72 * ca_conc * 1E3)) - (base/VOLT_SCALE)" />
+            <DerivedVariable name="range" dimension="none" value="(13.7 + 234 * exp(-0.72 * ca_conc * 1E3)) - BASE" />
             <ConditionalDerivedVariable name="t" dimension="time" exposure="t">
-                <Case condition="abt .gt. ZERO_POINT_TWO)" value="TIME_SCALE * (range * ((abt - 0.2)/ 0.8) + (base/VOLT_SCALE))/4" />
+                <Case condition="abt .gt. ZERO_POINT_TWO)" value="TIME_SCALE * (range * ((abt - 0.2)/ 0.8) + BASE) * 4" />
                 <!-- case where taufunc <= 0.2, abtau = 0.2, and the whole (range..) = 0 -->
-                <Case value="TIME_SCALE * (base/VOLT_SCALE)/4" />
+                <Case value="TIME_SCALE * BASE * 4" />
             </ConditionalDerivedVariable>
         </Dynamics>
     </ComponentType>
