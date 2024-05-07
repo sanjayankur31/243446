@@ -34,7 +34,6 @@ Contact: akemann@brain.riken.jp
     </notes>
 
         <annotation>
-            <!--
             <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" >
               <rdf:Description rdf:about="Kv3">
                 <dc:title>NeuroML conversion of Kv3 channel from Zang et al</dc:title>
@@ -93,7 +92,6 @@ Contact: akemann@brain.riken.jp
                 </dcterms:created>
               </rdf:Description>
             </rdf:RDF>
-            -->
         </annotation>
 
         <gate id="n" type="gateHHrates" instances="4">

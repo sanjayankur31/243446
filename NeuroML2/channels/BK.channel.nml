@@ -22,7 +22,6 @@ However, to make slow component function during the ISI, here the Q10 correction
         </notes>
 
         <annotation>
-            <!--
             <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" >
               <rdf:Description rdf:about="BK">
                 <dc:title>NeuroML conversion of BK channel from Zang et al</dc:title>
@@ -76,7 +75,6 @@ However, to make slow component function during the ISI, here the Q10 correction
                 </dcterms:created>
               </rdf:Description>
             </rdf:RDF>
-            -->
         </annotation>
 
         <gate id="ab" type="gateHHtauInf" instances="1">

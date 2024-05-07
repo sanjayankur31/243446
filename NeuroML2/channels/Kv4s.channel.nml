@@ -13,7 +13,6 @@ Yunliang Zang April 16th 2015
         </notes>
 
         <annotation>
-            <!--
             <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" >
               <rdf:Description rdf:about="Kv4s">
                 <dc:title>NeuroML conversion of Kv4s channel from Zang et al</dc:title>
@@ -71,7 +70,6 @@ Yunliang Zang April 16th 2015
                 </dcterms:created>
               </rdf:Description>
             </rdf:RDF>
-            -->
         </annotation>
 
         <gate id="n" type="gateHHratesInf" instances="4">
