@@ -84,16 +84,10 @@ Channel Density Distributions Explain Spiking Variability in the Globus Pallidus
         <gate id="h" type="gateHHtauInf" instances="1">
             <q10Settings type="q10ExpTemp" experimentalTemp="23degC" q10Factor="3" />
             <timeCourse type="fixedTimeCourse" tau="20 ms" />
-            <steadyState type="Kv4fHHSigmoidVariable_vshift" rate="1" midpoint="-75.30348mV" scale="-6.06329mV"/>
+            <steadyState type="HHSigmoidVariable" rate="1" midpoint="-75.30348mV" scale="-6.06329mV"/>
         </gate>
     </ionChannelVShift>
-    <ComponentType name="Kv4fHHSigmoidVariable_vshift"
-                   extends="baseHHVariable"
-                   description="Sigmoidal form for variable equation with vshift">
-        <Requirement name="vShift" dimension="voltage" />
-        <Dynamics>
-            <DerivedVariable name="x" dimension="none" exposure="x" value="rate / (1 + exp(0 - (v - (midpoint - vShift))/scale))"/>
-        </Dynamics>
+    <ComponentType name="Kv4f_HHSigmoidVariableVShift" description="HHSigmoidVariable with VShift" >
     </ComponentType>
 
 
