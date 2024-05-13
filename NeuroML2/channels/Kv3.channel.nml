@@ -3,7 +3,6 @@
 
     <notes>NeuroML file containing a single Channel description</notes>
 
-    <!-- note, a vshift is defined but set to 0, so we do not need to use ionChannelVShift -->
     <ionChannel id="Kv3" conductance="10pS" type="ionChannelHH" species="k">
 
         <notes>Voltage-gated potassium channel with high threshold and fast activation/deactivation kinetics
@@ -96,8 +95,9 @@ Contact: akemann@brain.riken.jp
 
         <gate id="n" type="gateHHrates" instances="4">
             <q10Settings type="q10ExpTemp" experimentalTemp="22degC" q10Factor="2.7" />
-            <forwardRate type="HHExpRate" rate="0.22 per_ms" midpoint="-16mV" scale="26.5mV"/>
-            <reverseRate type="HHExpRate" rate="0.22 per_ms" midpoint="-16mV" scale="-26.5mV"/>
+            <!-- hoc files: vshift is 4 mV, midpoint = -(16 + 4) = -20mV -->
+            <forwardRate type="HHExpRate" rate="0.22 per_ms" midpoint="-20mV" scale="26.5mV"/>
+            <reverseRate type="HHExpRate" rate="0.22 per_ms" midpoint="-20mV" scale="-26.5mV"/>
         </gate>
 
     </ionChannel>

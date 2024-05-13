@@ -65,7 +65,7 @@ CONSTANT {
 }
 
 PARAMETER {
-	vshift = 0
+	vshift = 4
 	gbar = 0.005 (S/cm2)   <0,1e9>
 }
 
