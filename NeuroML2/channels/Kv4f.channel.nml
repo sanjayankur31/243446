@@ -3,7 +3,7 @@
 
     <notes>NeuroML file containing a single Channel description</notes>
 
-    <!-- vshift is mentioned in mod file, but it isn't really a shift -->
+    <!-- vshift is included in mod file, but the value is 0 in hoc, so we don't include it -->
     <ionChannel id="Kv4f" conductance="10pS" type="ionChannelHH" species="k">
 
         <notes>
