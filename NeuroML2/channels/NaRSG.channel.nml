@@ -87,34 +87,34 @@
             <openState id="O"/>
 
             <forwardTransition id="f01" from="C1" to="C2" >
-                <rate type="Generic_NaRSG_exp_rate_vshift" const="4" alpha_beta="150 per_ms" x_1_2="20" vshift1="0" vshift2="0"/>
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="4" alpha_beta="150 per_ms" x="20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
             </forwardTransition>
             <reverseTransition id="b01" from="C1" to="C2" >
-                <rate type="Generic_NaRSG_exp_rate_vshift" const="1" alpha_beta="3 per_ms" x_1_2="-20" vshift1="0" vshift2="0"/>
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="1" alpha_beta="3 per_ms" x="-20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
             </reverseTransition>
 
 
             <forwardTransition id="f02" from="C2" to="C3" >
-                <rate type="Generic_NaRSG_exp_rate_vshift" const="3" alpha_beta="150 per_ms" x_1_2="20" vshift1="0" vshift2="0"/>
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="3" alpha_beta="150 per_ms" x="20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
             </forwardTransition>
             <reverseTransition id="b02" from="C2" to="C3" >
-                <rate type="Generic_NaRSG_exp_rate_vshift" const="2" alpha_beta="3 per_ms" x_1_2="-20" vshift1="0" vshift2="0"/>
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="2" alpha_beta="3 per_ms" x="-20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
             </reverseTransition>
 
 
             <forwardTransition id="f03" from="C3" to="C4" >
-                <rate type="Generic_NaRSG_exp_rate_vshift" const="2" alpha_beta="150 per_ms" x_1_2="20" vshift1="0" vshift2="0"/>
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="2" alpha_beta="150 per_ms" x="20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
             </forwardTransition>
             <reverseTransition id="b03" from="C3" to="C4" >
-                <rate type="Generic_NaRSG_exp_rate_vshift" const="3" alpha_beta="3 per_ms" x_1_2="-20" vshift1="0" vshift2="0"/>
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="3" alpha_beta="3 per_ms" x="-20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
             </reverseTransition>
 
 
             <forwardTransition id="f04" from="C4" to="C5" >
-                <rate type="Generic_NaRSG_exp_rate_vshift" const="1" alpha_beta="150 per_ms" x_1_2="20" vshift1="0" vshift2="0"/>
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="1" alpha_beta="150 per_ms" x="20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
             </forwardTransition>
             <reverseTransition id="b04" from="C4" to="C5" >
-                <rate type="Generic_NaRSG_exp_rate_vshift" const="4" alpha_beta="3 per_ms" x_1_2="-20" vshift1="0" vshift2="0"/>
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="4" alpha_beta="3 per_ms" x="-20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
             </reverseTransition>
 
 
@@ -130,7 +130,7 @@
                 <rate type="Generic_NaRSG_const_rate" const="1.75 per_ms"  o_on_off="1 per_ms" c_on_off="1 per_ms" power="1"/>
             </forwardTransition>
             <reverseTransition id="bip" from="O" to="B" >
-                <rate type="" />
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="1" alpha_beta="0.03 per_ms" x="-25" vshift1="0" vshift2="0"/>
             </reverseTransition>
 
 
@@ -138,39 +138,39 @@
                 <rate type="Generic_NaRSG_const_rate" const="0.75 per_ms"  o_on_off="1 per_ms" c_on_off="1 per_ms" power="0"/>
             </forwardTransition>
             <reverseTransition id="bin" from="O" to="I6" >
-                <rate type="" />
+                <rate type="Generic_NaRSG_const_rate" const="0.005 per_ms"  o_on_off="1 per_ms" c_on_off="1 per_ms" power="0"/>
             </reverseTransition>
 
 
             <forwardTransition id="f11" from="I1" to="I2" >
-                <rate type="Generic_NaRSG_exp_rate_vshift_vshift" const="4" alpha_beta="150 per_ms" o_on_off="0.75 per_ms" c_on_off="0.005 per_ms" vshift="0mV" x_1_2="20" vshift2="0"/>
+                <rate type="Generic_NaRSG_exp_rate_vshift_vshift" const="4" alpha_beta="150 per_ms" o_on_off="0.75 per_ms" c_on_off="0.005 per_ms" vshift="0mV" x="20" vshift2="0"/>
             </forwardTransition>
             <reverseTransition id="b11" from="I1" to="I2" >
-                <rate type="" />
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="1" alpha_beta="3 per_ms" x="-20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
             </reverseTransition>
 
 
             <forwardTransition id="f12" from="I2" to="I3" >
-                <rate type="Generic_NaRSG_exp_rate_vshift_vshift" const="2" alpha_beta="150 per_ms" o_on_off="0.75 per_ms" c_on_off="0.005 per_ms" vshift="0mV" x_1_2="20" vshift2="0"/>
+                <rate type="Generic_NaRSG_exp_rate_vshift_vshift" const="2" alpha_beta="150 per_ms" o_on_off="0.75 per_ms" c_on_off="0.005 per_ms" vshift="0mV" x="20" vshift2="0"/>
             </forwardTransition>
             <reverseTransition id="b12" from="I2" to="I3" >
-                <rate type="" />
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="2" alpha_beta="3 per_ms" x="-20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
             </reverseTransition>
 
 
             <forwardTransition id="f13" from="I3" to="I4" >
-                <rate type="Generic_NaRSG_exp_rate_vshift_vshift" const="3" alpha_beta="150 per_ms" o_on_off="0.75 per_ms" c_on_off="0.005 per_ms" vshift="0mV" x_1_2="20" vshift2="0"/>
+                <rate type="Generic_NaRSG_exp_rate_vshift_vshift" const="3" alpha_beta="150 per_ms" o_on_off="0.75 per_ms" c_on_off="0.005 per_ms" vshift="0mV" x="20" vshift2="0"/>
             </forwardTransition>
             <reverseTransition id="b13" from="I3" to="I4" >
-                <rate type="" />
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="3" alpha_beta="3 per_ms" x="-20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
             </reverseTransition>
 
 
             <forwardTransition id="f14" from="I4" to="I5" >
-                <rate type="Generic_NaRSG_exp_rate_vshift_vshift" const="1" alpha_beta="150 per_ms" o_on_off="0.75 per_ms" c_on_off="0.005 per_ms" vshift="0mV" x_1_2="20" vshift2="0"/>
+                <rate type="Generic_NaRSG_exp_rate_vshift_vshift" const="1" alpha_beta="150 per_ms" o_on_off="0.75 per_ms" c_on_off="0.005 per_ms" vshift="0mV" x="20" vshift2="0"/>
             </forwardTransition>
             <reverseTransition id="b14" from="I4" to="I5" >
-                <rate type="" />
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="4" alpha_beta="3 per_ms" x="-20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
             </reverseTransition>
 
 
@@ -178,7 +178,7 @@
                 <rate type="Generic_NaRSG_const_rate" const="1.75 per_ms"  o_on_off="0.075 per_ms" c_on_off="0.005 per_ms" power="0"/>
             </forwardTransition>
             <reverseTransition id="b1n" from="I5" to="I6" >
-                <rate type="" />
+                <rate type="Generic_NaRSG_const_rate" const="40 per_ms"  o_on_off="1 per_ms" c_on_off="1 per_ms" power="0"/>
             </reverseTransition>
 
 
@@ -186,7 +186,7 @@
                 <rate type="Generic_NaRSG_const_rate" const="0.75 per_ms"  o_on_off="0.075 per_ms" c_on_off="0.005 per_ms" power="0"/>
             </forwardTransition>
             <reverseTransition id="bi1" from="C1" to="I1" >
-                <rate type="" />
+                <rate type="Generic_NaRSG_const_rate" const="0.5 per_ms"  o_on_off="1 per_ms" c_on_off="1 per_ms" power="0"/>
             </reverseTransition>
 
 
@@ -194,7 +194,7 @@
                 <rate type="Generic_NaRSG_const_rate" const="0.75 per_ms"  o_on_off="0.075 per_ms" c_on_off="0.005 per_ms" power="1"/>
             </forwardTransition>
             <reverseTransition id="bi2" from="C2" to="I2" >
-                <rate type="" />
+                <rate type="Generic_NaRSG_const_rate" const="0.5 per_ms"  o_on_off="0.005 per_ms" c_on_off="0.5 per_ms" power="1"/>
             </reverseTransition>
 
 
@@ -202,7 +202,7 @@
                 <rate type="Generic_NaRSG_const_rate" const="0.75 per_ms"  o_on_off="0.075 per_ms" c_on_off="0.005 per_ms" power="2"/>
             </forwardTransition>
             <reverseTransition id="bi3" from="C3" to="I3" >
-                <rate type="" />
+                <rate type="Generic_NaRSG_const_rate" const="0.5 per_ms"  o_on_off="0.005 per_ms" c_on_off="0.5 per_ms" power="2"/>
             </reverseTransition>
 
 
@@ -210,7 +210,7 @@
                 <rate type="Generic_NaRSG_const_rate" const="0.75 per_ms"  o_on_off="0.075 per_ms" c_on_off="0.005 per_ms" power="3"/>
             </forwardTransition>
             <reverseTransition id="bi4" from="C4" to="I4" >
-                <rate type="" />
+                <rate type="Generic_NaRSG_const_rate" const="0.5 per_ms"  o_on_off="0.005 per_ms" c_on_off="0.5 per_ms" power="3"/>
             </reverseTransition>
 
 
@@ -218,7 +218,7 @@
                 <rate type="Generic_NaRSG_const_rate" const="0.75 per_ms"  o_on_off="0.075 per_ms" c_on_off="0.005 per_ms" power="3"/>
             </forwardTransition>
             <reverseTransition id="bi5" from="C5" to="I5" >
-                <rate type="" />
+                <rate type="Generic_NaRSG_const_rate" const="0.5 per_ms"  o_on_off="0.005 per_ms" c_on_off="0.5 per_ms" power="4"/>
             </reverseTransition>
 
 
@@ -253,7 +253,7 @@
         <Parameter name="c_on_off" dimension="per_time"/>
         <Parameter name="vshift" dimension="none"/>
         <Parameter name="vshift2" dimension="none"/>
-        <Parameter name="x_1_2" dimension="none"/>
+        <Parameter name="x" dimension="none"/>
 
         <Constant name="base_q10" dimension="temperature" value="22 degC"/>
         <Constant name="TENDEGREES" dimension="temperature" value="10K"/>
@@ -265,7 +265,7 @@
             <DerivedVariable name="al_be_fac" dimension="none" value="(o_on_off/c_on_off)^0.25" />
             <DerivedVariable name="V" dimension="none" value="v/VOLT_SCALE" />
             <DerivedVariable name="qt" dimension="none" value="2.3^((temperature-base_q10)/TENDEGREES)"/>
-            <DerivedVariable name="r" exposure="r" dimension="per_time" value="const * qt * alpha_beta * al_be_fac * exp((V + vshift)/(x_1_2 + vshift2)"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="const * qt * alpha_beta * al_be_fac * exp((V + vshift)/(x + vshift2)"/>
         </Dynamics>
 
     </ComponentType>
