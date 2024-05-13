@@ -3,7 +3,8 @@
 
     <notes>NeuroML file containing a single Channel description</notes>
 
-    <ionChannelVShift id="Kv4f" conductance="10pS" vShift="0mV" species="k">
+    <!-- vshift is mentioned in mod file, but it isn't really a shift -->
+    <ionChannel id="Kv4f" conductance="10pS" type="ionChannelHH" species="k">
 
         <notes>
 NEURON implementation of a potassium channel from Kv4 subunits
@@ -86,9 +87,7 @@ Channel Density Distributions Explain Spiking Variability in the Globus Pallidus
             <timeCourse type="fixedTimeCourse" tau="20 ms" />
             <steadyState type="HHSigmoidVariable" rate="1" midpoint="-75.30348mV" scale="-6.06329mV"/>
         </gate>
-    </ionChannelVShift>
-    <ComponentType name="Kv4f_HHSigmoidVariableVShift" description="HHSigmoidVariable with VShift" >
-    </ComponentType>
+    </ionChannel>
 
 
 </neuroml>
