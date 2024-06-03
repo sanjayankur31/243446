@@ -11,6 +11,7 @@ Copyright 2024 Ankur Sinha
 Author: Ankur Sinha <sanjay DOT ankur AT gmail DOT com>
 """
 
+import matplotlib
 import shutil
 import neuroml
 import numpy
@@ -24,6 +25,8 @@ from pyneuroml.neuron.analysis.HHanalyse import get_states
 from pyneuroml.analysis.NML2ChannelAnalysis import get_ks_channel_states
 import neuron
 import datetime
+
+matplotlib.rcParams["figure.dpi"] = 300
 
 
 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
@@ -83,6 +86,10 @@ def test_channel_mod(channel=None, erev=None, gbar=None, amplitude=None):
         with open(modFileName, "r") as handle:
             modFileTxt = handle.read()
         states = get_states(modFileTxt)
+        # remove unused states
+        states.remove("Ca")
+        states.remove("Ia")
+        states = sorted(states)
         for s in states:
             chan_obj = getattr(soma(0.5), f"_ref_{s}_{channel}")
             states_rec.append(h.Vector().record(chan_obj))
@@ -94,14 +101,14 @@ def test_channel_mod(channel=None, erev=None, gbar=None, amplitude=None):
     tRec = h.Vector().record(h._ref_t)
 
     ic = h.IClamp(soma(0.5))
-    ic.delay = 200
+    ic.delay = 500
     ic.dur = 1000
     ic.amp = float(amplitude)
     v0 = -65.0  # Pre holding potential
 
     h.finitialize(v0)
     h.dt = 0.01
-    h.continuerun(1200)
+    h.continuerun(1500)
 
     # print(tRec.to_python())
     generate_plot(
@@ -202,7 +209,7 @@ def test_channel_nml(
     pg = newdoc.add(
         "PulseGenerator",
         id="pulseGen_0",
-        delay="200ms",
+        delay="500ms",
         duration="1000ms",
         amplitude=amplitude,
     )
@@ -223,7 +230,8 @@ def test_channel_nml(
         state_info = get_ks_channel_states(ion_channel_ks)
         for gate, states in state_info.items():
             recorder_dict[f"{timestamp}_{gate}_states.dat"] = []
-            for s in states:
+            sorted_states = sorted(states)
+            for s in sorted_states:
                 recorder_dict[f"{timestamp}_{gate}_states.dat"].append(
                     f"{newpop.id}[0]/biophys/membraneProperties/{channel}_chan/{channel}/{gate}/{s}/occupancy"
                 )
@@ -232,7 +240,7 @@ def test_channel_nml(
         sim_id=f"testsim_{channel}",
         neuroml_file=f"Test_{channel}.net.nml",
         target=newnet.id,
-        duration="1200ms",
+        duration="1500ms",
         dt="0.01ms",
         lems_file_name=f"LEMS_test_{channel}.xml",
         nml_doc=newdoc,
