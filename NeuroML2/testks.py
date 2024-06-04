@@ -23,10 +23,12 @@ from pyneuroml.runners import run_lems_with_jneuroml
 from pyneuroml.plot import generate_plot
 from pyneuroml.neuron.analysis.HHanalyse import get_states
 from pyneuroml.analysis.NML2ChannelAnalysis import get_ks_channel_states
+from pyneuroml.utils.plot import get_next_hex_color
 import neuron
 import datetime
+import random
 
-matplotlib.rcParams["figure.dpi"] = 300
+matplotlib.rcParams["figure.dpi"] = 200
 
 
 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
@@ -40,6 +42,7 @@ def test_channel_mod(channel=None, erev=None, gbar=None, amplitude=None):
     :returns: TODO
 
     """
+    myrand = random.Random(123)
     shutil.rmtree("x86_64", ignore_errors=True)
 
     h = neuron.h
@@ -110,6 +113,8 @@ def test_channel_mod(channel=None, erev=None, gbar=None, amplitude=None):
     h.dt = 0.01
     h.continuerun(1500)
 
+    colors = [get_next_hex_color(myrand) for i in range(len(states))]
+
     # print(tRec.to_python())
     generate_plot(
         xvalues=[tRec.to_python()],
@@ -122,6 +127,7 @@ def test_channel_mod(channel=None, erev=None, gbar=None, amplitude=None):
         ylim=[-85, 100],
         save_figure_to=f"{timestamp}_test_{channel}_NEURON.png",
         title_above_plot="NEURON",
+        legend_position="outer right"
     )
 
     generate_plot(
@@ -129,12 +135,14 @@ def test_channel_mod(channel=None, erev=None, gbar=None, amplitude=None):
         yvalues=[rec.to_python() for rec in states_rec],
         title="NEURON: states",
         labels=states,
+        colors=colors,
         show_plot_already=True,
         xaxis="time (ms)",
         yaxis="rate",
         ylim=[-0.1, 1.1],
         save_figure_to=f"{timestamp}_test_{channel}_states_NEURON.png",
         title_above_plot="NEURON",
+        legend_position="outer right"
     )
 
 
@@ -147,6 +155,7 @@ def test_channel_nml(
     :returns: TODO
 
     """
+    myrand = random.Random(123)
     shutil.rmtree("x86_64", ignore_errors=True)
     newdoc = component_factory(neuroml.NeuroMLDocument, id="testdoc")
 
@@ -276,8 +285,10 @@ def test_channel_nml(
         ylim=[-85, 100],
         save_figure_to=f"{timestamp}_test_{channel.lower()}_NML.png",
         title_above_plot="NML",
+        legend_position="outer right"
     )
 
+    colors = [get_next_hex_color(myrand) for i in range(len(data.values()))]
     if channel != "pas":
         # states
         labels = [alab.split("/")[-2] for alab in data.keys()]
@@ -286,12 +297,14 @@ def test_channel_nml(
             yvalues=list(data.values()),
             title="NML",
             labels=labels,
+            colors=colors,
             show_plot_already=True,
             xaxis="time (ms)",
             yaxis="rate",
             ylim=[-0.1, 1.1],
             save_figure_to=f"{timestamp}_test_{channel.lower()}_states_NML.png",
             title_above_plot="NML",
+            legend_position="outer right"
         )
 
 
