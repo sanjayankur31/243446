@@ -61,7 +61,7 @@ def annotate_SK2():
             "Ankur Sinha": {"https://orcid.org/0000-0001-7568-7167": "orcid"},
         },
         is_part_of={"http://uri.neuinfo.org/nif/nifstd/sao471801888": "purkinje cell"},
-        is_version_of={
+        predecessors={
             "https://modeldb.science/80769": "Original model",
             "https://github.com/OpenSourceBrain/SolinasEtAl-GolgiCell/blob/master/NeuroML2/Golgi_KAHP.channel.nml": "GitHub",
         },
