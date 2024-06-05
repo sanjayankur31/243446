@@ -47,12 +47,6 @@ for the formulation of Angelo's data, the original parameter correspond to a max
                     <rdf:li rdf:resource="https://doi.org/10.1523/JNEUROSCI.5204-05.2006"/>
                   </rdf:Bag>
                 </bqmodel:isDescribedBy>
-                <dc:creator>
-                  <rdf:Bag>
-                    <rdf:li>Walther Akemann</rdf:li>
-                    <rdf:li>akemann at brain.riken.jp</rdf:li>
-                  </rdf:Bag>
-                </dc:creator>
                 <dc:contributor>
                   <rdf:Bag>
                     <rdf:li>Ankur Sinha</rdf:li>

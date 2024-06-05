@@ -22,7 +22,7 @@ However, to make slow component function during the ISI, here the Q10 correction
         </notes>
 
         <annotation>
-            <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" >
+            <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:foaf="http://xmlns.com/foaf/0.1/" >
               <rdf:Description rdf:about="BK">
                 <dc:title>NeuroML conversion of BK channel from Zang et al</dc:title>
                 <dc:description>Ca-dependent K channel</dc:description>
@@ -58,8 +58,9 @@ However, to make slow component function during the ISI, here the Q10 correction
                 </bqmodel:isDescribedBy>
                 <dc:creator>
                   <rdf:Bag>
-                    <rdf:li>Walther Akemann</rdf:li>
-                    <rdf:li>akemann at brain.riken.jp</rdf:li>
+                    <rdf:li rdf:resource="#Bin_Wang"/>
+                    <rdf:li rdf:resource="#Robert_Brenner"/>
+                    <rdf:li rdf:resource="#David_Jaffe"/>
                   </rdf:Bag>
                 </dc:creator>
                 <dc:contributor>
@@ -70,9 +71,18 @@ However, to make slow component function during the ISI, here the Q10 correction
                 </dc:contributor>
                 <dcterms:created>
                   <rdf:Description>
-                    <dcterms:W3CDTF>2024-05-01</dcterms:W3CDTF>
+                    <dcterms:W3CDTF>2010-05-27</dcterms:W3CDTF>
                   </rdf:Description>
                 </dcterms:created>
+              </rdf:Description>
+              <rdf:Description rdf:about="#Bin_Wang">
+                <foaf:name>Bin Wang</foaf:name>
+              </rdf:Description>
+              <rdf:Description rdf:about="#Robert_Brenner">
+                <foaf:name>Robert Brenner</foaf:name>
+              </rdf:Description>
+              <rdf:Description rdf:about="#David_Jaffe">
+                <foaf:name>David Jaffe</foaf:name>
               </rdf:Description>
             </rdf:RDF>
         </annotation>
