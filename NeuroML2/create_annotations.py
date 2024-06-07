@@ -69,6 +69,30 @@ def annotate_SK2():
     )
     print(annotation)
 
+def annotate_mslo():
+    """Annotation for mslo channel"""
+    annotation = create_annotation(
+        subject="Kmslo",
+        title="NeuroML conversion of mslo channel from Zang et al",
+        abstract=None,
+        serialization_format="pretty-xml",
+        annotation_style="miriam",
+        indent=12,
+        xml_header=False,
+        description="Large conductance Ca2+ activated K+ channel mslo",
+        is_={"http://uri.neuinfo.org/nif/nifstd/nifext_2511": "Voltage-gated potassium channel"},
+        creation_date="2024-06-07",
+        citations={"https://doi.org/10.1007/s12311-010-0224-3": "Cerebellum"},
+        sources={"https://modeldb.science/243446": "modeldb",
+                 "https://github.com/ModelDBRepository/243446": "GitHub"},
+        authors={
+            "Ankur Sinha": {"https://orcid.org/0000-0001-7568-7167": "orcid"},
+        },
+        is_part_of={"http://uri.neuinfo.org/nif/nifstd/sao471801888": "purkinje cell"},
+        see_also={"https://doi.org/10.1046/j.1460-9568.2002.02171.x": "Data from"}
+    )
+    print(annotation)
+
 
 if __name__ == "__main__":
-    annotate_SK2()
+    annotate_mslo()
