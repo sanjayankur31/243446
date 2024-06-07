@@ -416,3 +416,18 @@ if __name__ == "__main__":
         ca=True
     )
     """
+
+    # mslo
+    """
+    test_channel_mod(channel="mslo", ion="k", erev="-84.69", gbar_var="gbar", gbar=0.0, amplitude=None, ca=True)
+    """
+
+    test_channel_nml(
+        channel="Kmslo",
+        ion="k",
+        erev="-84.69 mV",
+        gbar=0.0,
+        amplitude=None,
+        record_data={},
+        ca=True
+    )
