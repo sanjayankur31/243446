@@ -69,6 +69,7 @@
 
 
         <gateKS id="n" instances="1">
+            <q10Settings type="q10ExpTemp" q10Factor="2.7" experimentalTemp="22 degC"/>
 
             <closedState id="C1"/>
             <closedState id="C2"/>
@@ -233,16 +234,11 @@
         <Parameter name="c_on_off" dimension="per_time"/>
         <Parameter name="power" dimension="none"/>
 
-        <Constant name="base_q10" dimension="temperature" value="22 degC"/>
-        <Constant name="q10_factor" dimension="none" value="2.7"/>
-        <Constant name="TENDEGREES" dimension="temperature" value="10K"/>
-
-        <Requirement name="temperature" dimension="temperature"/>
+        <Requirement name="rateScale" dimension="none"/>
 
         <Dynamics>
             <DerivedVariable name="al_be_fac" dimension="none" value="(o_on_off/c_on_off)^0.25" />
-            <DerivedVariable name="qt" dimension="none" value="q10_factor^((temperature-base_q10)/TENDEGREES)"/>
-            <DerivedVariable name="r" exposure="r" dimension="per_time" value="const * al_be_fac^power * qt"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="const * al_be_fac^power * rateScale"/>
         </Dynamics>
 
     </ComponentType>
@@ -256,18 +252,13 @@
         <Parameter name="vshift2" dimension="none"/>
         <Parameter name="x" dimension="none"/>
 
-        <Constant name="base_q10" dimension="temperature" value="22 degC"/>
-        <Constant name="q10_factor" dimension="none" value="2.7"/>
-        <Constant name="TENDEGREES" dimension="temperature" value="10K"/>
         <Constant name="VOLT_SCALE" dimension="voltage" value="1mV" />
-
-        <Requirement name="temperature" dimension="temperature"/>
+        <Requirement name="rateScale" dimension="none"/>
 
         <Dynamics>
             <DerivedVariable name="al_be_fac" dimension="none" value="(o_on_off/c_on_off)^0.25" />
             <DerivedVariable name="V" dimension="none" value="v/VOLT_SCALE" />
-            <DerivedVariable name="qt" dimension="none" value="q10_factor^((temperature-base_q10)/TENDEGREES)"/>
-            <DerivedVariable name="r" exposure="r" dimension="per_time" value="const * qt * alpha_beta * al_be_fac * exp((V + vshift1)/(x + vshift2))"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="const * rateScale * alpha_beta * al_be_fac * exp((V + vshift1)/(x + vshift2))"/>
         </Dynamics>
 
     </ComponentType>

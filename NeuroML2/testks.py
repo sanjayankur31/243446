@@ -389,7 +389,7 @@ if __name__ == "__main__":
 
     # NaRSG
     """
-    test_channel_mod(channel="narsg", ion="na", erev="67", gbar=0.0, amplitude=0.001)
+    test_channel_mod(channel="narsg", ion="na", erev="67", gbar_var="gbar", gbar=0.0, amplitude=0.001, ca=False)
 
     test_channel_nml(
         channel="NaRSG",
@@ -398,11 +398,11 @@ if __name__ == "__main__":
         gbar=0.0,
         amplitude="0.001 nA",
         record_data={},
+        ca=False
     )
     """
 
     # SK2: only calcium dependent, not voltage dependent
-    """
     """
     test_channel_mod(channel="SK2", ion="k", erev="-84.69", gbar_var="gkbar", gbar=0.0, amplitude=None, ca=True)
 
@@ -415,3 +415,4 @@ if __name__ == "__main__":
         record_data={},
         ca=True
     )
+    """
