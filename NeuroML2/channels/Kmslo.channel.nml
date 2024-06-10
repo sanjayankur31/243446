@@ -56,7 +56,7 @@
         </annotation>
 
         <gateKS id="n" instances="1">
-            <q10Settings type="q10ExpTemp" q10Factor="2.7" experimentalTemp="23 degC"/>
+            <q10Settings type="q10ExpTemp" q10Factor="2" experimentalTemp="25 degC"/>
             <closedState id="C0"/>
             <closedState id="C1"/>
             <closedState id="C2"/>
@@ -69,101 +69,101 @@
             <openState id="O4"/>
 
             <forwardTransition id="c01" from="C0" to="C1" >
-                <rate type="Kmslo_rate_ca" const="4" k1="1E3" onoffrate="1" />
+                <rate type="Kmslo_rate_ca" const="4" k1="1E3" onoffrate="1 per_ms" />
             </forwardTransition>
             <reverseTransition id="c10" from="C0" to="C1" >
-                <rate type="Kmslo_rate" const="1" Ko_Kc="8.63E-3" k1="1E3" onoffrate="1" />
+                <rate type="Kmslo_rate" const="1" Ko_Kc="8.63E-3" k1="1E3" onoffrate="1 per_ms" />
             </reverseTransition>
 
             <forwardTransition id="c12" from="C1" to="C2" >
-                <rate type="Kmslo_rate_ca" const="3" k1="1E3" onoffrate="1" />
+                <rate type="Kmslo_rate_ca" const="3" k1="1E3" onoffrate="1 per_ms" />
             </forwardTransition>
             <reverseTransition id="c21" from="C1" to="C2" >
-                <rate type="Kmslo_rate" const="2" Ko_Kc="8.63E-3" k1="1E3" onoffrate="1" />
+                <rate type="Kmslo_rate" const="2" Ko_Kc="8.63E-3" k1="1E3" onoffrate="1 per_ms" />
             </reverseTransition>
 
             <forwardTransition id="c23" from="C2" to="C3" >
-                <rate type="Kmslo_rate_ca" const="2" k1="1E3" onoffrate="1" />
+                <rate type="Kmslo_rate_ca" const="2" k1="1E3" onoffrate="1 per_ms" />
             </forwardTransition>
             <reverseTransition id="c32" from="C2" to="C3" >
-                <rate type="Kmslo_rate" const="3" Ko_Kc="8.63E-3" k1="1E3" onoffrate="1" />
+                <rate type="Kmslo_rate" const="3" Ko_Kc="8.63E-3" k1="1E3" onoffrate="1 per_ms" />
             </reverseTransition>
 
 
             <forwardTransition id="c34" from="C3" to="C4" >
-                <rate type="Kmslo_rate_ca" const="2" k1="1E3" onoffrate="1" />
+                <rate type="Kmslo_rate_ca" const="1" k1="1E3" onoffrate="1 per_ms" />
             </forwardTransition>
             <reverseTransition id="c43" from="C3" to="C4" >
-                <rate type="Kmslo_rate" const="4" Ko_Kc="8.63E-3" k1="1E3" onoffrate="1" />
+                <rate type="Kmslo_rate" const="4" Ko_Kc="8.63E-3" k1="1E3" onoffrate="1 per_ms" />
             </reverseTransition>
 
 
             <forwardTransition id="o01" from="O0" to="O1" >
-                <rate type="Kmslo_rate_ca" const="4" k1="1E3" onoffrate="1" />
+                <rate type="Kmslo_rate_ca" const="4" k1="1E3" onoffrate="1 per_ms" />
             </forwardTransition>
             <reverseTransition id="o10" from="O0" to="O1" >
-                <rate type="Kmslo_rate" const="1" Ko_Kc="0.6563E-3" k1="1E3" onoffrate="1" />
+                <rate type="Kmslo_rate" const="1" Ko_Kc="0.6563E-3" k1="1E3" onoffrate="1 per_ms" />
             </reverseTransition>
 
 
             <forwardTransition id="o12" from="O1" to="O2" >
-                <rate type="Kmslo_rate_ca" const="3" k1="1E3" onoffrate="1" />
+                <rate type="Kmslo_rate_ca" const="3" k1="1E3" onoffrate="1 per_ms" />
             </forwardTransition>
             <reverseTransition id="o21" from="O1" to="O2" >
-                <rate type="Kmslo_rate" const="2" Ko_Kc="0.6563E-3" k1="1E3" onoffrate="1" />
+                <rate type="Kmslo_rate" const="2" Ko_Kc="0.6563E-3" k1="1E3" onoffrate="1 per_ms" />
             </reverseTransition>
 
 
             <forwardTransition id="o23" from="O2" to="O3" >
-                <rate type="Kmslo_rate_ca" const="2" k1="1E3" onoffrate="1" />
+                <rate type="Kmslo_rate_ca" const="2" k1="1E3" onoffrate="1 per_ms" />
             </forwardTransition>
             <reverseTransition id="o32" from="O2" to="O3" >
-                <rate type="Kmslo_rate" const="3" Ko_Kc="0.6563E-3" k1="1E3" onoffrate="1" />
+                <rate type="Kmslo_rate" const="3" Ko_Kc="0.6563E-3" k1="1E3" onoffrate="1 per_ms" />
             </reverseTransition>
 
 
             <forwardTransition id="o34" from="O3" to="O4" >
-                <rate type="Kmslo_rate_ca" const="1" k1="1E3" onoffrate="1" />
+                <rate type="Kmslo_rate_ca" const="1" k1="1E3" onoffrate="1 per_ms" />
             </forwardTransition>
             <reverseTransition id="o43" from="O3" to="O4" >
-                <rate type="Kmslo_rate" const="4" Ko_Kc="0.6563E-3" k1="1E3" onoffrate="1" />
+                <rate type="Kmslo_rate" const="4" Ko_Kc="0.6563E-3" k1="1E3" onoffrate="1 per_ms" />
             </reverseTransition>
 
             <forwardTransition id="f0" from="C0" to="O0" >
-                <rate type="Kmslo_rate_exp" pf_pb="2.39E-3" Qo_Qc="0.73" EXP_TEMP_CELSIUS="34 degC"/>
+                <rate type="Kmslo_rate_exp" pf_pb="2.39E-3 per_ms" Qo_Qc="0.73" EXP_TEMP_CELSIUS="34 degC"/>
             </forwardTransition>
             <reverseTransition id="b0" from="C0" to="O0" >
-                <rate type="Kmslo_rate_exp" pf_pb="3936E-3" Qo_Qc="-0.67" EXP_TEMP_CELSIUS="34 degC"/>
+                <rate type="Kmslo_rate_exp" pf_pb="3936E-3 per_ms" Qo_Qc="-0.67" EXP_TEMP_CELSIUS="34 degC"/>
             </reverseTransition>
 
             <forwardTransition id="f1" from="C1" to="O1" >
-                <rate type="Kmslo_rate_exp" pf_pb="5.4918E-3" Qo_Qc="0.73" EXP_TEMP_CELSIUS="34 degC"/>
+                <rate type="Kmslo_rate_exp" pf_pb="5.4918E-3 per_ms" Qo_Qc="0.73" EXP_TEMP_CELSIUS="34 degC"/>
             </forwardTransition>
             <reverseTransition id="b1" from="C1" to="O1" >
-                <rate type="Kmslo_rate_exp" pf_pb="687.3215E-3" Qo_Qc="-0.67" EXP_TEMP_CELSIUS="34 degC"/>
+                <rate type="Kmslo_rate_exp" pf_pb="687.3215E-3 per_ms" Qo_Qc="-0.67" EXP_TEMP_CELSIUS="34 degC"/>
             </reverseTransition>
 
 
             <forwardTransition id="f2" from="C2" to="O2" >
-                <rate type="Kmslo_rate_exp" pf_pb="24.6205E-3" Qo_Qc="0.73" EXP_TEMP_CELSIUS="34 degC"/>
+                <rate type="Kmslo_rate_exp" pf_pb="24.6205E-3 per_ms" Qo_Qc="0.73" EXP_TEMP_CELSIUS="34 degC"/>
             </forwardTransition>
             <reverseTransition id="b2" from="C2" to="O2" >
-                <rate type="Kmslo_rate_exp" pf_pb="234.5875E-3" Qo_Qc="-0.67" EXP_TEMP_CELSIUS="34 degC"/>
+                <rate type="Kmslo_rate_exp" pf_pb="234.5875E-3 per_ms" Qo_Qc="-0.67" EXP_TEMP_CELSIUS="34 degC"/>
             </reverseTransition>
 
 
             <forwardTransition id="f3" from="C3" to="O3" >
-                <rate type="Kmslo_rate_exp" pf_pb="142.4546E-3" Qo_Qc="0.73" EXP_TEMP_CELSIUS="34 degC"/>
+                <rate type="Kmslo_rate_exp" pf_pb="142.4546E-3 per_ms" Qo_Qc="0.73" EXP_TEMP_CELSIUS="34 degC"/>
             </forwardTransition>
             <reverseTransition id="b3" from="C3" to="O3" >
-                <rate type="Kmslo_rate_exp" pf_pb="103.2204E-3" Qo_Qc="-0.67" EXP_TEMP_CELSIUS="34 degC"/>
+                <rate type="Kmslo_rate_exp" pf_pb="103.2204E-3 per_ms" Qo_Qc="-0.67" EXP_TEMP_CELSIUS="34 degC"/>
             </reverseTransition>
 
             <forwardTransition id="f4" from="C4" to="O4" >
-                <rate type="Kmslo_rate_exp" pf_pb="211.0220E-3" Qo_Qc="0.73" EXP_TEMP_CELSIUS="34 degC"/>
+                <rate type="Kmslo_rate_exp" pf_pb="211.0220E-3 per_ms" Qo_Qc="0.73" EXP_TEMP_CELSIUS="34 degC"/>
             </forwardTransition>
             <reverseTransition id="b4" from="C4" to="O4" >
-                <rate type="Kmslo_rate_exp" pf_pb="11.6581E-3" Qo_Qc="-0.67" EXP_TEMP_CELSIUS="34 degC"/>
+                <rate type="Kmslo_rate_exp" pf_pb="11.6581E-3 per_ms" Qo_Qc="-0.67" EXP_TEMP_CELSIUS="34 degC"/>
             </reverseTransition>
         </gateKS>
     </ionChannelKS>
@@ -172,15 +172,13 @@
         <Parameter name="const" dimension="none"/>
         <Parameter name="k1" dimension="none"/>
         <Parameter name="Ko_Kc" dimension="none"/>
-        <Parameter name="onoffrate" dimension="none"/>
-
-        <Constant name="TIME_SCALE" dimension="time" value="1 ms"/>
+        <Parameter name="onoffrate" dimension="per_time"/>
 
         <!--qt multiplier-->
         <Requirement name="rateScale" dimension="none"/>
 
         <Dynamics>
-            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * const * ((Ko_Kc) * k1 * onoffrate) / TIME_SCALE"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * const * ((Ko_Kc) * k1 * onoffrate)"/>
         </Dynamics>
 
     </ComponentType>
@@ -189,39 +187,37 @@
     <ComponentType name="Kmslo_rate_ca" extends="baseVoltageConcDepRate">
         <Parameter name="const" dimension="none"/>
         <Parameter name="k1" dimension="none"/>
-        <Parameter name="onoffrate" dimension="none"/>
+        <Parameter name="onoffrate" dimension="per_time"/>
 
-        <Constant name="TIME_SCALE" dimension="time" value="1 ms"/>
-        <Constant name="CONC_SCALE" dimension="concentration" value="1 mol_per_cm3"/>
+        <Constant name="CONC_SCALE" dimension="concentration" value="1 mM"/>
         <!--qt multiplier-->
         <Requirement name="rateScale" dimension="none"/>
 
         <Dynamics>
             <DerivedVariable name="ca_conc" dimension="none" value="caConc / CONC_SCALE"/>
-            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * const * (ca_conc * k1 * onoffrate) / TIME_SCALE"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * const * (ca_conc * k1 * onoffrate)"/>
         </Dynamics>
 
     </ComponentType>
 
     <ComponentType name="Kmslo_rate_exp" extends="baseVoltageConcDepRate">
-        <Parameter name="pf_pb" dimension="none"/>
+        <Parameter name="pf_pb" dimension="per_time"/>
         <Parameter name="Qo_Qc" dimension="none"/>
         <Parameter name="EXP_TEMP_CELSIUS" dimension="temperature"/>
 
-        <Constant name="TIME_SCALE" dimension="time" value="1 ms"/>
-        <Constant name="TEMP_SCALE" dimension="temperature" value="1 degC"/>
+        <Constant name="TEMP_SCALE_CELSIUS" dimension="temperature" value="1 degC"/>
+        <Constant name="TEMP_SCALE_KELVIN" dimension="temperature" value="1 K"/>
         <Constant name="VOLT_SCALE" dimension="voltage" value="1 mV"/>
-        <Constant name="R" dimension="none" value="8.3144621"/>
-        <Constant name="FARADAY" dimension="none" value="96485.3"/>
+        <Constant name="R" dimension="idealGasConstantDims" value="8.3144621 J_per_K_per_mol" />
+        <Constant name="Faraday" dimension="charge_per_mole" value="96485.3C_per_mol"/>
 
         <!-- qt multiplier -->
         <Requirement name="rateScale" dimension="none"/>
 
         <Dynamics>
-            <DerivedVariable name="V" dimension="none" value="v / VOLT_SCALE"/>
-            <DerivedVariable name="EXP_TEMP" dimension="none" value="EXP_TEMP_CELSIUS / TEMP_SCALE"/>
-            <DerivedVariable name="alpha_beta" dimension="none" value="exp(Qo_Qc * FARADAY * V/R/(273.15 + EXP_TEMP ))"/>
-            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * pf_pb * alpha_beta / TIME_SCALE"/>
+            <DerivedVariable name="EXP_TEMP_KELVIN" dimension="temperature" value="(273.15 + (EXP_TEMP_CELSIUS/TEMP_SCALE_CELSIUS)) * TEMP_SCALE_KELVIN"/>
+            <DerivedVariable name="alpha_beta" dimension="none" value="exp(Qo_Qc * Faraday * v/R/EXP_TEMP_KELVIN)"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * pf_pb * alpha_beta"/>
         </Dynamics>
 
     </ComponentType>
