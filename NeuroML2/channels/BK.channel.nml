@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2.3.xsd" id="BK">
+
+    <notes>NeuroML file containing a single Channel description</notes>
+
+    <ionChannel id="BK" conductance="10pS" type="ionChannelHH" species="k">
+
+        <notes>Ca-dependent K channels (BK) - alphabeta4 and alpha
+Bin Wang, Robert Brenner, and David Jaffe - Originally written May 27, 2010
+
+June 1, 2010 - added double exponential function for voltage-dependent activation
+
+July 3, 2010 - changed voltage-dependence for the two channels based on revised data
+
+April 2, 2011 - adjusted parameters based on updated Bin data
+
+modified by Yunliang October 19th, 2015
+
+Notice that the experiments are done under room temperature after checking with David Jaffe!!!!
+
+However, to make slow component function during the ISI, here the Q10 correction is not included.
+        </notes>
+
+        <annotation>
+            <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:foaf="http://xmlns.com/foaf/0.1/" >
+              <rdf:Description rdf:about="BK">
+                <dc:title>NeuroML conversion of BK channel from Zang et al</dc:title>
+                <dc:description>Ca-dependent K channel</dc:description>
+                <bqbiol:is>
+                  <rdf:Bag>
+                <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/nifext_2511"/>
+                  </rdf:Bag>
+                </bqbiol:is>
+                <bqbiol:isPartOf>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/sao471801888"/>
+                  </rdf:Bag>
+                </bqbiol:isPartOf>
+                <dc:source>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://modeldb.science/243446?tab=1"/>
+                  </rdf:Bag>
+                </dc:source>
+                <dc:source>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://github.com/ModelDBRepository/243446"/>
+                  </rdf:Bag>
+                </dc:source>
+                <bqmodel:isDerivedFrom>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://modeldb.science/80769"/>
+                  </rdf:Bag>
+                </bqmodel:isDerivedFrom>
+                <bqmodel:isDescribedBy>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://doi.org/10.1523/JNEUROSCI.5204-05.2006"/>
+                  </rdf:Bag>
+                </bqmodel:isDescribedBy>
+                <dc:creator>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="#Bin_Wang"/>
+                    <rdf:li rdf:resource="#Robert_Brenner"/>
+                    <rdf:li rdf:resource="#David_Jaffe"/>
+                  </rdf:Bag>
+                </dc:creator>
+                <dc:contributor>
+                  <rdf:Bag>
+                    <rdf:li>Ankur Sinha</rdf:li>
+                    <rdf:li>https://orcid.org/0000-0001-7568-7167</rdf:li>
+                  </rdf:Bag>
+                </dc:contributor>
+                <dcterms:created>
+                  <rdf:Description>
+                    <dcterms:W3CDTF>2010-05-27</dcterms:W3CDTF>
+                  </rdf:Description>
+                </dcterms:created>
+              </rdf:Description>
+              <rdf:Description rdf:about="#Bin_Wang">
+                <foaf:name>Bin Wang</foaf:name>
+              </rdf:Description>
+              <rdf:Description rdf:about="#Robert_Brenner">
+                <foaf:name>Robert Brenner</foaf:name>
+              </rdf:Description>
+              <rdf:Description rdf:about="#David_Jaffe">
+                <foaf:name>David Jaffe</foaf:name>
+              </rdf:Description>
+            </rdf:RDF>
+        </annotation>
+
+        <gate id="ab" type="gateHHtauInf" instances="1">
+            <q10Settings type="q10ExpTemp" experimentalTemp="34degC" q10Factor="3" />
+            <timeCourse type="bk_ab_tau"/>
+            <steadyState type="bk_ab_inf"/>
+        </gate>
+    </ionChannel>
+
+    <!-- not standard sigmoid or exponential -->
+    <ComponentType name="bk_ab_tau" extends="baseVoltageConcDepTime" description="Tau for BK">
+        <Constant name="base" dimension="voltage" value="1mV" />
+        <Constant name="ZERO_POINT_TWO" dimension="none" value="0.2" />
+        <Constant name="TIME_SCALE" dimension="time" value="1ms" />
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1mV" />
+        <Constant name="CONC_SCALE" dimension="concentration" value="1 mM" />
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v/VOLT_SCALE" />
+            <DerivedVariable name="BASE" dimension="none" value="base/VOLT_SCALE" />
+            <DerivedVariable name="ca_conc" dimension="none" value="caConc/CONC_SCALE" />
+            <DerivedVariable name="vv" dimension="none" value="V + 100 - (25 - 55.7 + 136.9 * exp(-0.28 * ca_conc * 1E3))" />
+            <DerivedVariable name="abt" dimension="none" value="1/(10 * (exp(-vv/63.6) + exp(-(150 - vv)/63.6)) - 5.2)" />
+            <DerivedVariable name="range" dimension="none" value="(13.7 + 234 * exp(-0.72 * ca_conc * 1E3)) - BASE" />
+            <ConditionalDerivedVariable name="t" dimension="time" exposure="t">
+                <Case condition="abt .gt. ZERO_POINT_TWO)" value="TIME_SCALE * (range * ((abt - 0.2)/ 0.8) + BASE) * 4" />
+                <!-- case where taufunc <= 0.2, abtau = 0.2, and the whole (range..) = 0 -->
+                <Case value="TIME_SCALE * BASE * 4" />
+            </ConditionalDerivedVariable>
+        </Dynamics>
+    </ComponentType>
+
+    <ComponentType name="bk_ab_inf" extends="baseVoltageConcDepVariable" description="inf for BK">
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1mV" />
+        <Constant name="CONC_SCALE" dimension="concentration" value="1 mM" />
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v/VOLT_SCALE" />
+            <DerivedVariable name="ca_conc" dimension="none" value="caConc/CONC_SCALE" />
+            <DerivedVariable name="abinf" dimension="none" value="-56.449 + (104.52 * exp(-0.22964 * ca_conc * 1E3)) + (295.68 * exp(-2.1571 * ca_conc * 1E3))" />
+            <DerivedVariable name="x" dimension="none" exposure="x" value="1/(1 + exp((abinf - V)/(25/1.6)))" />
+        </Dynamics>
+    </ComponentType>
+
+</neuroml>

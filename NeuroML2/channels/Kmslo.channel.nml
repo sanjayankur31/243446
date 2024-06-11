@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta4.xsd" id="Golgi_KAHP">
+
+    <notes>ChannelML file containing a single Channel description from Solinas et al 2007</notes>
+
+    <ionChannelKS id="Kmslo" conductance="10pS" species="k">
+
+        <notes>Large conductance Ca2+ activated K+ channel mslo</notes>
+        <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:orcid="https://orcid.org/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" >
+              <rdf:Description rdf:about="Kmslo">
+                <dc:title>NeuroML conversion of mslo channel from Zang et al</dc:title>
+                <dc:description>Large conductance Ca2+ activated K+ channel mslo</dc:description>
+                <bqbiol:is>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/nifext_2511"/>
+                  </rdf:Bag>
+                </bqbiol:is>
+                <bqbiol:isPartOf>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/sao471801888"/>
+                  </rdf:Bag>
+                </bqbiol:isPartOf>
+                <dc:source>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://modeldb.science/243446"/>
+                    <rdf:li rdf:resource="https://github.com/ModelDBRepository/243446"/>
+                  </rdf:Bag>
+                </dc:source>
+                <rdfs:seeAlso>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://doi.org/10.1046/j.1460-9568.2002.02171.x"/>
+                  </rdf:Bag>
+                </rdfs:seeAlso>
+                <bqmodel:isDescribedBy>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://doi.org/10.1007/s12311-010-0224-3"/>
+                  </rdf:Bag>
+                </bqmodel:isDescribedBy>
+                <dc:creator>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="#Ankur_Sinha"/>
+                  </rdf:Bag>
+                </dc:creator>
+                <dcterms:created>
+                  <rdf:Description>
+                    <dcterms:W3CDTF>2024-06-07</dcterms:W3CDTF>
+                  </rdf:Description>
+                </dcterms:created>
+              </rdf:Description>
+              <rdf:Description rdf:about="#Ankur_Sinha">
+                <foaf:name>Ankur Sinha</foaf:name>
+                <orcid:id rdf:resource="https://orcid.org/0000-0001-7568-7167"/>
+              </rdf:Description>
+            </rdf:RDF>
+        </annotation>
+
+        <gateKS id="n" instances="1">
+            <q10Settings type="q10ExpTemp" q10Factor="2" experimentalTemp="25 degC"/>
+            <closedState id="C0"/>
+            <closedState id="C1"/>
+            <closedState id="C2"/>
+            <closedState id="C3"/>
+            <closedState id="C4"/>
+            <openState id="O0"/>
+            <openState id="O1"/>
+            <openState id="O2"/>
+            <openState id="O3"/>
+            <openState id="O4"/>
+
+            <forwardTransition id="c01" from="C0" to="C1" >
+                <rate type="Kmslo_rate_ca" const="4" k1="1E3" onoffrate="1 per_ms" />
+            </forwardTransition>
+            <reverseTransition id="c10" from="C0" to="C1" >
+                <rate type="Kmslo_rate" const="1" Ko_Kc="8.63E-3" k1="1E3" onoffrate="1 per_ms" />
+            </reverseTransition>
+
+            <forwardTransition id="c12" from="C1" to="C2" >
+                <rate type="Kmslo_rate_ca" const="3" k1="1E3" onoffrate="1 per_ms" />
+            </forwardTransition>
+            <reverseTransition id="c21" from="C1" to="C2" >
+                <rate type="Kmslo_rate" const="2" Ko_Kc="8.63E-3" k1="1E3" onoffrate="1 per_ms" />
+            </reverseTransition>
+
+            <forwardTransition id="c23" from="C2" to="C3" >
+                <rate type="Kmslo_rate_ca" const="2" k1="1E3" onoffrate="1 per_ms" />
+            </forwardTransition>
+            <reverseTransition id="c32" from="C2" to="C3" >
+                <rate type="Kmslo_rate" const="3" Ko_Kc="8.63E-3" k1="1E3" onoffrate="1 per_ms" />
+            </reverseTransition>
+
+
+            <forwardTransition id="c34" from="C3" to="C4" >
+                <rate type="Kmslo_rate_ca" const="1" k1="1E3" onoffrate="1 per_ms" />
+            </forwardTransition>
+            <reverseTransition id="c43" from="C3" to="C4" >
+                <rate type="Kmslo_rate" const="4" Ko_Kc="8.63E-3" k1="1E3" onoffrate="1 per_ms" />
+            </reverseTransition>
+
+
+            <forwardTransition id="o01" from="O0" to="O1" >
+                <rate type="Kmslo_rate_ca" const="4" k1="1E3" onoffrate="1 per_ms" />
+            </forwardTransition>
+            <reverseTransition id="o10" from="O0" to="O1" >
+                <rate type="Kmslo_rate" const="1" Ko_Kc="0.6563E-3" k1="1E3" onoffrate="1 per_ms" />
+            </reverseTransition>
+
+
+            <forwardTransition id="o12" from="O1" to="O2" >
+                <rate type="Kmslo_rate_ca" const="3" k1="1E3" onoffrate="1 per_ms" />
+            </forwardTransition>
+            <reverseTransition id="o21" from="O1" to="O2" >
+                <rate type="Kmslo_rate" const="2" Ko_Kc="0.6563E-3" k1="1E3" onoffrate="1 per_ms" />
+            </reverseTransition>
+
+
+            <forwardTransition id="o23" from="O2" to="O3" >
+                <rate type="Kmslo_rate_ca" const="2" k1="1E3" onoffrate="1 per_ms" />
+            </forwardTransition>
+            <reverseTransition id="o32" from="O2" to="O3" >
+                <rate type="Kmslo_rate" const="3" Ko_Kc="0.6563E-3" k1="1E3" onoffrate="1 per_ms" />
+            </reverseTransition>
+
+
+            <forwardTransition id="o34" from="O3" to="O4" >
+                <rate type="Kmslo_rate_ca" const="1" k1="1E3" onoffrate="1 per_ms" />
+            </forwardTransition>
+            <reverseTransition id="o43" from="O3" to="O4" >
+                <rate type="Kmslo_rate" const="4" Ko_Kc="0.6563E-3" k1="1E3" onoffrate="1 per_ms" />
+            </reverseTransition>
+
+            <forwardTransition id="f0" from="C0" to="O0" >
+                <rate type="Kmslo_rate_exp" pf_pb="2.39E-3 per_ms" Qo_Qc="0.73" EXP_TEMP_CELSIUS="34 degC"/>
+            </forwardTransition>
+            <reverseTransition id="b0" from="C0" to="O0" >
+                <rate type="Kmslo_rate_exp" pf_pb="3936E-3 per_ms" Qo_Qc="-0.67" EXP_TEMP_CELSIUS="34 degC"/>
+            </reverseTransition>
+
+            <forwardTransition id="f1" from="C1" to="O1" >
+                <rate type="Kmslo_rate_exp" pf_pb="5.4918E-3 per_ms" Qo_Qc="0.73" EXP_TEMP_CELSIUS="34 degC"/>
+            </forwardTransition>
+            <reverseTransition id="b1" from="C1" to="O1" >
+                <rate type="Kmslo_rate_exp" pf_pb="687.3215E-3 per_ms" Qo_Qc="-0.67" EXP_TEMP_CELSIUS="34 degC"/>
+            </reverseTransition>
+
+
+            <forwardTransition id="f2" from="C2" to="O2" >
+                <rate type="Kmslo_rate_exp" pf_pb="24.6205E-3 per_ms" Qo_Qc="0.73" EXP_TEMP_CELSIUS="34 degC"/>
+            </forwardTransition>
+            <reverseTransition id="b2" from="C2" to="O2" >
+                <rate type="Kmslo_rate_exp" pf_pb="234.5875E-3 per_ms" Qo_Qc="-0.67" EXP_TEMP_CELSIUS="34 degC"/>
+            </reverseTransition>
+
+
+            <forwardTransition id="f3" from="C3" to="O3" >
+                <rate type="Kmslo_rate_exp" pf_pb="142.4546E-3 per_ms" Qo_Qc="0.73" EXP_TEMP_CELSIUS="34 degC"/>
+            </forwardTransition>
+            <reverseTransition id="b3" from="C3" to="O3" >
+                <rate type="Kmslo_rate_exp" pf_pb="103.2204E-3 per_ms" Qo_Qc="-0.67" EXP_TEMP_CELSIUS="34 degC"/>
+            </reverseTransition>
+
+            <forwardTransition id="f4" from="C4" to="O4" >
+                <rate type="Kmslo_rate_exp" pf_pb="211.0220E-3 per_ms" Qo_Qc="0.73" EXP_TEMP_CELSIUS="34 degC"/>
+            </forwardTransition>
+            <reverseTransition id="b4" from="C4" to="O4" >
+                <rate type="Kmslo_rate_exp" pf_pb="11.6581E-3 per_ms" Qo_Qc="-0.67" EXP_TEMP_CELSIUS="34 degC"/>
+            </reverseTransition>
+        </gateKS>
+    </ionChannelKS>
+
+    <ComponentType name="Kmslo_rate" extends="baseVoltageConcDepRate">
+        <Parameter name="const" dimension="none"/>
+        <Parameter name="k1" dimension="none"/>
+        <Parameter name="Ko_Kc" dimension="none"/>
+        <Parameter name="onoffrate" dimension="per_time"/>
+
+        <!--qt multiplier-->
+        <Requirement name="rateScale" dimension="none"/>
+
+        <Dynamics>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * const * ((Ko_Kc) * k1 * onoffrate)"/>
+        </Dynamics>
+
+    </ComponentType>
+
+    <!-- same as above, but with Ca conc instead of Ko/Kc -->
+    <ComponentType name="Kmslo_rate_ca" extends="baseVoltageConcDepRate">
+        <Parameter name="const" dimension="none"/>
+        <Parameter name="k1" dimension="none"/>
+        <Parameter name="onoffrate" dimension="per_time"/>
+
+        <Constant name="CONC_SCALE" dimension="concentration" value="1 mM"/>
+        <!--qt multiplier-->
+        <Requirement name="rateScale" dimension="none"/>
+
+        <Dynamics>
+            <DerivedVariable name="ca_conc" dimension="none" value="caConc / CONC_SCALE"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * const * (ca_conc * k1 * onoffrate)"/>
+        </Dynamics>
+
+    </ComponentType>
+
+    <ComponentType name="Kmslo_rate_exp" extends="baseVoltageConcDepRate">
+        <Parameter name="pf_pb" dimension="per_time"/>
+        <Parameter name="Qo_Qc" dimension="none"/>
+        <Parameter name="EXP_TEMP_CELSIUS" dimension="temperature"/>
+
+        <Constant name="TEMP_SCALE_CELSIUS" dimension="temperature" value="1 degC"/>
+        <Constant name="TEMP_SCALE_KELVIN" dimension="temperature" value="1 K"/>
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1 mV"/>
+        <Constant name="R" dimension="idealGasConstantDims" value="8.3144621 J_per_K_per_mol" />
+        <Constant name="Faraday" dimension="charge_per_mole" value="96485.3C_per_mol"/>
+
+        <!-- qt multiplier -->
+        <Requirement name="rateScale" dimension="none"/>
+
+        <Dynamics>
+            <DerivedVariable name="EXP_TEMP_KELVIN" dimension="temperature" value="(273.15 + (EXP_TEMP_CELSIUS/TEMP_SCALE_CELSIUS)) * TEMP_SCALE_KELVIN"/>
+            <DerivedVariable name="alpha_beta" dimension="none" value="exp(Qo_Qc * Faraday * v/R/EXP_TEMP_KELVIN)"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * pf_pb * alpha_beta"/>
+        </Dynamics>
+
+    </ComponentType>
+</neuroml>

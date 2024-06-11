@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2.3.xsd" id="Kv3">
+
+    <notes>NeuroML file containing a single Channel description</notes>
+
+    <ionChannel id="Kv3" conductance="10pS" type="ionChannelHH" species="k">
+
+        <notes>Voltage-gated potassium channel with high threshold and fast activation/deactivation kinetics
+
+KINETIC SCHEME: Hodgkin-Huxley (n^4)
+n'= alpha * (1-n) - betha * n
+g(v) = gbar * n^4 * ( v-ek )
+
+The rate constants of activation (alpha) and deactivation (beta) were approximated by:
+
+alpha(v) = ca * exp(-(v+cva)/cka)
+beta(v) = cb * exp(-(v+cvb)/ckb)
+
+Parameters can, cvan, ckan, cbn, cvbn, ckbn are given in the CONSTANT block.
+Values derive from least-square fits to experimental data of G/Gmax(v) and taun(v) in Martina et al. J Neurophysiol 97:563-571, 2007
+Model includes a calculation of Kv gating current
+
+Reference: Akemann et al., Biophys. J. (2009) 96: 3959-3976
+Notice that there is another set of data related with Kv3 by McKay and Turner European Journal of Neuroscience, Vol. 20, pp. 729–739, 2004
+in that paper, the activation threshold of Kv3 is much lower.
+Laboratory for Neuronal Circuit Dynamics
+RIKEN Brain Science Institute, Wako City, Japan
+http://www.neurodynamics.brain.riken.jp
+
+Date of Implementation: April 2007
+Contact: akemann@brain.riken.jp
+
+    </notes>
+
+        <annotation>
+            <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" >
+              <rdf:Description rdf:about="Kv3">
+                <dc:title>NeuroML conversion of Kv3 channel from Zang et al</dc:title>
+                <dc:description>Voltage-gated potassium channel with high threshold and fast activation/deactivation kinetics</dc:description>
+                <bqbiol:is>
+                  <rdf:Bag>
+                <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/nifext_2511"/>
+                  </rdf:Bag>
+                </bqbiol:is>
+                <bqbiol:is>
+                  <rdf:Bag>
+                <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/nifext_2718"/>
+                  </rdf:Bag>
+                </bqbiol:is>
+                <bqbiol:isPartOf>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/sao471801888"/>
+                  </rdf:Bag>
+                </bqbiol:isPartOf>
+                <dc:source>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://modeldb.science/243446?tab=1"/>
+                  </rdf:Bag>
+                </dc:source>
+                <dc:source>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://github.com/ModelDBRepository/243446"/>
+                  </rdf:Bag>
+                </dc:source>
+                <bqmodel:isDerivedFrom>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://modeldb.science/80769"/>
+                  </rdf:Bag>
+                </bqmodel:isDerivedFrom>
+                <bqmodel:isDescribedBy>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://doi.org/10.1523/JNEUROSCI.5204-05.2006"/>
+                  </rdf:Bag>
+                </bqmodel:isDescribedBy>
+                <dc:creator>
+                  <rdf:Bag>
+                    <rdf:li>Walther Akemann</rdf:li>
+                    <rdf:li>akemann at brain.riken.jp</rdf:li>
+                  </rdf:Bag>
+                </dc:creator>
+                <dc:contributor>
+                  <rdf:Bag>
+                    <rdf:li>Ankur Sinha</rdf:li>
+                    <rdf:li>https://orcid.org/0000-0001-7568-7167</rdf:li>
+                  </rdf:Bag>
+                </dc:contributor>
+                <dcterms:created>
+                  <rdf:Description>
+                    <dcterms:W3CDTF>2024-04-29</dcterms:W3CDTF>
+                  </rdf:Description>
+                </dcterms:created>
+              </rdf:Description>
+            </rdf:RDF>
+        </annotation>
+
+        <gate id="n" type="gateHHrates" instances="4">
+            <q10Settings type="q10ExpTemp" experimentalTemp="22degC" q10Factor="2.7" />
+            <!-- hoc files: vshift is 4 mV, midpoint = -(16 + 4) = -20mV -->
+            <forwardRate type="HHExpRate" rate="0.22 per_ms" midpoint="-20mV" scale="26.5mV"/>
+            <reverseRate type="HHExpRate" rate="0.22 per_ms" midpoint="-20mV" scale="-26.5mV"/>
+        </gate>
+
+    </ionChannel>
+
+
+</neuroml>

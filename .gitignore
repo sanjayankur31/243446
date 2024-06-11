@@ -1,0 +1,11 @@
+*.dat
+x86_64/
+/NeuroML2/*.mod
+*_nrn.py
+*_eden.py
+
+.mypy_cache/
+/NeuroML2/tests/arm64
+/NeuroML2/arm64
+
+__pycache__/
