@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ "3.8", "3.10"]
+        python-version: [ 3.9, "3.11" ]        
         #engine: [ jNeuroML_validate, jNeuroML_NEURON ]
         engine: [ jNeuroML_validate]
 
@@ -29,9 +29,8 @@ jobs:
         python-version:  ${{ matrix.python-version }}
 
     - name: Install OMV
-      run: |
+      run: |        
         pip install OSBModelValidation
-        pip install scipy sympy matplotlib cython pandas tables
 
     - name: Run OMV tests on engine ${{ matrix.engine }}
       run: |
