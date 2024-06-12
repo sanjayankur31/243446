@@ -143,20 +143,19 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
     colors = [get_next_hex_color(myrand) for i in range(len(states))]
 
     # print(tRec.to_python())
-    if amplitude is not None:
-        generate_plot(
-            xvalues=[tRec.to_python()],
-            yvalues=[vRec.to_python()],
-            title="NEURON",
-            labels=["v"],
-            show_plot_already=True,
-            xaxis="time (ms)",
-            yaxis="v (mV)",
-            ylim=[-85, 100],
-            save_figure_to=f"{timestamp}_test_{channel}_NEURON.png",
-            title_above_plot="NEURON",
-            legend_position="outer right"
-        )
+    generate_plot(
+        xvalues=[tRec.to_python()],
+        yvalues=[vRec.to_python()],
+        title="NEURON",
+        labels=["v"],
+        show_plot_already=True,
+        xaxis="time (ms)",
+        yaxis="v (mV)",
+        ylim=[-85, 100],
+        save_figure_to=f"{timestamp}_test_{channel}_NEURON.png",
+        title_above_plot="NEURON",
+        legend_position="outer right"
+    )
 
     if ca is not False:
         generate_plot(
@@ -186,6 +185,18 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
         title_above_plot="NEURON",
         legend_position="outer right"
     )
+
+    return [tRec.to_python()] * len(states), [rec.to_python() for rec in states_rec]
+    """
+    with open(f"{timestamp}_states_nrn.dat", 'w') as f:
+        xvalues = tRec.to_python()
+        yvalues = [rec.to_python() for rec in states_rec],
+        for t in range(len(xvalues)):
+            for ys in yvalues:
+                yvalsstrs = [str(v[t]) for v in ys]
+                yvalstr = '\t'.join(yvalsstrs)
+                print(str(xvalues[t]) + "\t" + yvalstr, file=f)
+    """
 
 
 def test_channel_nml(
@@ -292,14 +303,14 @@ def test_channel_nml(
         ion_channel_ks = channel_doc.ion_channel_kses[0]  # type: neuroml.IonChannelKS
         state_info = get_ks_channel_states(ion_channel_ks)
         for gate, states in state_info.items():
-            recorder_dict[f"{timestamp}_{gate}_states.dat"] = []
+            recorder_dict[f"{timestamp}_{gate}_states_nml.dat"] = []
             sorted_states = sorted(states)
             for s in sorted_states:
-                recorder_dict[f"{timestamp}_{gate}_states.dat"].append(
+                recorder_dict[f"{timestamp}_{gate}_states_nml.dat"].append(
                     f"{newpop.id}[0]/biophys/membraneProperties/{channel}_chan/{channel}/{gate}/{s}/occupancy"
                 )
     if ca is True:
-        recorder_dict[f"{timestamp}_ca.dat"] = [f"{newpop.id}[0]/caConc"]
+        recorder_dict[f"{timestamp}_ca_nml.dat"] = [f"{newpop.id}[0]/caConc"]
 
     generate_lems_file_for_neuroml(
         sim_id=f"testsim_{channel}",
@@ -345,20 +356,19 @@ def test_channel_nml(
             legend_position="outer right"
         )
 
-    if amplitude is not None:
-        generate_plot(
-            xvalues=[recorded_time],
-            yvalues=[recorded_v],
-            title="NML",
-            labels=["v"],
-            show_plot_already=True,
-            xaxis="time (ms)",
-            yaxis="v (mV)",
-            ylim=[-85, 100],
-            save_figure_to=f"{timestamp}_test_{channel.lower()}_NML.png",
-            title_above_plot="NML",
-            legend_position="outer right"
-        )
+    generate_plot(
+        xvalues=[recorded_time],
+        yvalues=[recorded_v],
+        title="NML",
+        labels=["v"],
+        show_plot_already=True,
+        xaxis="time (ms)",
+        yaxis="v (mV)",
+        ylim=[-85, 100],
+        save_figure_to=f"{timestamp}_test_{channel.lower()}_NML.png",
+        title_above_plot="NML",
+        legend_position="outer right"
+    )
 
     colors = [get_next_hex_color(myrand) for i in range(len(data.values()))]
     if channel != "pas":
@@ -378,6 +388,7 @@ def test_channel_nml(
             title_above_plot="NML",
             legend_position="outer right"
         )
+        return [recorded_time] * len(data.values()), data
 
 
 if __name__ == "__main__":
@@ -404,9 +415,9 @@ if __name__ == "__main__":
 
     # SK2: only calcium dependent, not voltage dependent
     """
-    test_channel_mod(channel="SK2", ion="k", erev="-84.69", gbar_var="gkbar", gbar=0.0, amplitude=None, ca=True)
+    x1, y1 = test_channel_mod(channel="SK2", ion="k", erev="-84.69", gbar_var="gkbar", gbar=0.0, amplitude=None, ca=True)
 
-    test_channel_nml(
+    x2, data = test_channel_nml(
         channel="SK2",
         ion="k",
         erev="-84.69 mV",
@@ -418,11 +429,9 @@ if __name__ == "__main__":
     """
 
     # mslo
-    """
-    test_channel_mod(channel="mslo", ion="k", erev="-84.69", gbar_var="gbar", gbar=0.0, amplitude=None, ca=True)
-    """
+    x1, y1 = test_channel_mod(channel="mslo", ion="k", erev="-84.69", gbar_var="gbar", gbar=0.0, amplitude=None, ca=True)
 
-    test_channel_nml(
+    x2, data = test_channel_nml(
         channel="Kmslo",
         ion="k",
         erev="-84.69 mV",
@@ -430,4 +439,24 @@ if __name__ == "__main__":
         amplitude=None,
         record_data={},
         ca=True
+    )
+
+    # generate combined plot
+    myrand = random.Random(123)
+    colors = [get_next_hex_color(myrand) for i in range(len(data.values()))]
+    labels = [alab.split("/")[-2] + " nrn" for alab in data.keys()]
+    labels += [alab.split("/")[-2] + " nml" for alab in data.keys()]
+    generate_plot(
+        xvalues=x1 + x2,
+        yvalues=y1 + list(data.values()),
+        title="Combined states",
+        labels=labels,
+        colors=colors + colors,
+        show_plot_already=True,
+        xaxis="time (ms)",
+        yaxis="rate",
+        ylim=[-0.1, 1.1],
+        # save_figure_to=f"{timestamp}_test_{channel.lower()}_states_NML.png",
+        title_above_plot="Combined states",
+        legend_position="outer right"
     )
