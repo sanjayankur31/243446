@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2.3.xsd" id="BK">
+
+    <notes>NeuroML file containing a single Channel description</notes>
+
+    <ionChannel id="CaT" conductance="10pS" type="ionChannelHH" species="ca">
+        <notes>Low threshold calcium current Cerebellum Purkinje Cell Model
+Q10 is estimated from this work, Temperature dependence of T-type Calcium channel gating, NEUROSCIENCE
+written by Yunliang Zang according to the data provided by Stephane Diudone, compared with the summarised data from stephane,
+T type calcium channels has two gates. so the activation curve was refitted.
+The junction potential is -6.6 mV
+It does not work even changing it back to cai
+April 16th, 2015
+This version does not contribute to the calcium concentration and BK together with SK.
+    </notes>
+
+        <gateHHtauInf id="m" instances="3">
+            <q10Settings type="q10ExpTemp" q10Factor="1.0913" experimentalTemp="32 degC"/>
+
+            <timeCourse type="CaT_tau"/>
+            <steadyState type="CaT_m_inf" rate="1.0" midpoint="35.606 mV" scale="-4.7056mV"/>
+        </gateHHtauInf>
+
+        <gateHHtauInf id="h" instances="1">
+            <q10Settings type="q10ExpTemp" q10Factor="1.0913" experimentalTemp="32 degC"/>
+
+            <timeCourse type="CaT_tau"/>
+            <!-- midpoint = -(-75.118) + (-6.6) -->
+            <steadyState type="HHSigmoidVariable" rate="1.0" midpoint="68.518 mV" scale="6.4635 mV"/>
+        </gateHHtauInf>
+    </ionChannel>
+
+     <ComponentType name="CaT_tau"
+         extends="baseVoltageDepTime">
+
+        <Parameter name="max_tau" dimension="time"/>
+        <Parameter name="min_tau" dimension="time"/>
+        <Parameter name="midpoint" dimension="voltage"/>
+        <Parameter name="scale" dimension="voltage"/>
+        <Constant name="table_max" dimension="voltage" value="40 mV"/>
+        <Dynamics>
+            <ConditionalDerivedVariable name="t" dimension="time" exposure="t" >
+                <Case condition="v .gt. table_max" value="((max_tau - min_tau) / (1 + exp(0 - (table_max - midpoint) / scale))) + min_tau"/>
+                <Case value="(((max_tau - min_tau) / (1 + exp(0 - (v - midpoint) / scale))) + min_tau)"/>
+            </ConditionalDerivedVariable>
+
+        </Dynamics>
+
+    </ComponentType>
+
+    <ComponentType name="CaT_m_inf"
+        extends="baseVoltageDepVariable">
+
+        <Parameter name="rate" dimension="none"/>
+        <Parameter name="midpoint" dimension="voltage"/>
+        <Parameter name="scale" dimension="voltage"/>
+        <Dynamics>
+            <DerivedVariable name="x" dimension="per_time" exposure="x" value="(rate / (1 + exp(0 - (v - midpoint) / scale))^(1/3))"/>
+        </Dynamics>
+    </ComponentType>
+
+</neuroml>
