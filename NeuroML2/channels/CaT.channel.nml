@@ -17,45 +17,48 @@ This version does not contribute to the calcium concentration and BK together wi
         <gateHHtauInf id="m" instances="3">
             <q10Settings type="q10ExpTemp" q10Factor="1.0913" experimentalTemp="32 degC"/>
 
-            <timeCourse type="CaT_tau"/>
-            <steadyState type="CaT_m_inf" rate="1.0" midpoint="35.606 mV" scale="-4.7056mV"/>
+            <timeCourse type="CaT_tau" A_tau="-2.3199 per_ms" B_tau="2.5712 per_ms" C_tau="1.2757 per_ms" vshift="-6.6 mV" midpoint1="-48.048 mV" midpoint2="-28.386 mV" scale1=" 30.655 mV" scale2="9.6306 mV"/>
+            <steadyState type="CaT_inf" rate="1.0" midpoint="-42.206 mV" vshift="-6.6 mV" scale="-4.7056mV" power="0.33333"/>
         </gateHHtauInf>
 
         <gateHHtauInf id="h" instances="1">
             <q10Settings type="q10ExpTemp" q10Factor="1.0913" experimentalTemp="32 degC"/>
 
-            <timeCourse type="CaT_tau"/>
-            <!-- midpoint = -(-75.118) + (-6.6) -->
-            <steadyState type="HHSigmoidVariable" rate="1.0" midpoint="68.518 mV" scale="6.4635 mV"/>
+            <timeCourse type="CaT_tau" A_tau="0.17746 per_ms" B_tau="0.13402 per_ms" C_tau="0.0076 per_ms" vshift="-6.6 mV" midpoint1="-58.535mV" midpoint2="-101.436mV" scale1="6.2692 mV" scale2="-5.5845 mV"/>
+            <steadyState type="CaT_inf" midpoint="-75.118 mV" vshift="-6.6 mV" scale="6.4635 mV" power="1"/>
         </gateHHtauInf>
     </ionChannel>
 
      <ComponentType name="CaT_tau"
          extends="baseVoltageDepTime">
 
-        <Parameter name="max_tau" dimension="time"/>
-        <Parameter name="min_tau" dimension="time"/>
-        <Parameter name="midpoint" dimension="voltage"/>
-        <Parameter name="scale" dimension="voltage"/>
-        <Constant name="table_max" dimension="voltage" value="40 mV"/>
+        <Parameter name="A_tau" dimension="per_time"/>
+        <Parameter name="B_tau" dimension="per_time"/>
+        <Parameter name="C_tau" dimension="per_time"/>
+        <Parameter name="vshift" dimension="voltage"/>
+        <Parameter name="midpoint1" dimension="voltage"/>
+        <Parameter name="midpoint2" dimension="voltage"/>
+        <Parameter name="scale1" dimension="voltage"/>
+        <Parameter name="scale2" dimension="voltage"/>
+
         <Dynamics>
-            <ConditionalDerivedVariable name="t" dimension="time" exposure="t" >
-                <Case condition="v .gt. table_max" value="((max_tau - min_tau) / (1 + exp(0 - (table_max - midpoint) / scale))) + min_tau"/>
-                <Case value="(((max_tau - min_tau) / (1 + exp(0 - (v - midpoint) / scale))) + min_tau)"/>
-            </ConditionalDerivedVariable>
+            <DerivedVariable name="t" dimension="time" exposure="t" value="1.0 / ( C_tau + (A_tau / (1 + exp(-(v - midpoint1 + vshift) / scale1))) + (B_tau / (1 + exp(-(v - midpoint2 + vshift) / scale2)))) "/>
 
         </Dynamics>
 
     </ComponentType>
 
-    <ComponentType name="CaT_m_inf"
+    <ComponentType name="CaT_inf"
         extends="baseVoltageDepVariable">
 
-        <Parameter name="rate" dimension="none"/>
         <Parameter name="midpoint" dimension="voltage"/>
+        <Parameter name="vshift" dimension="voltage"/>
         <Parameter name="scale" dimension="voltage"/>
+        <Parameter name="power" dimension="none"/>
+        <Constant name="TIME_SCALE" value="1 ms" dimension="time" />
         <Dynamics>
-            <DerivedVariable name="x" dimension="per_time" exposure="x" value="(rate / (1 + exp(0 - (v - midpoint) / scale))^(1/3))"/>
+            <DerivedVariable name="y" dimension="per_time" value="(1.0 / (1 + exp((v - midpoint - vshift) / scale))^(power)) / TIME_SCALE"/>
+            <TimeDerivative variable="x" value="" />
         </Dynamics>
     </ComponentType>
 
