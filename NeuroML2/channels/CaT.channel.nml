@@ -57,8 +57,7 @@ This version does not contribute to the calcium concentration and BK together wi
         <Parameter name="power" dimension="none"/>
         <Constant name="TIME_SCALE" value="1 ms" dimension="time" />
         <Dynamics>
-            <DerivedVariable name="y" dimension="per_time" value="(1.0 / (1 + exp((v - midpoint - vshift) / scale))^(power)) / TIME_SCALE"/>
-            <TimeDerivative variable="x" value="" />
+            <DerivedVariable name="x" exposure="x" dimension="per_time" value="(1.0 / (1 + exp((v - midpoint - vshift) / scale))^(power)) / TIME_SCALE"/>
         </Dynamics>
     </ComponentType>
 

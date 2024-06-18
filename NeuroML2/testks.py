@@ -99,8 +99,10 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
             h.nrn_load_dll("x86_64/.libs/libnrnmech.so")
             soma.insert(str(channel))
 
-        setattr(soma(0.5), f"e{ion}", float(erev))
-        setattr(soma(0.5), f"{gbar_var}_{channel}", float(gbar))
+        if erev:
+            setattr(soma(0.5), f"e{ion}", float(erev))
+        if gbar:
+            setattr(soma(0.5), f"{gbar_var}_{channel}", float(gbar))
 
         modFileName = f"mod/{channel}.mod"
         with open(modFileName, "r") as handle:
@@ -426,7 +428,6 @@ if __name__ == "__main__":
         record_data={},
         ca=True
     )
-    """
 
     # mslo
     x1, y1 = test_channel_mod(channel="mslo", ion="k", erev="-84.69", gbar_var="gbar", gbar=0.0, amplitude=None, ca=True)
@@ -436,6 +437,21 @@ if __name__ == "__main__":
         ion="k",
         erev="-84.69 mV",
         gbar=0.0,
+        amplitude=None,
+        record_data={},
+        ca=True
+    )
+    """
+
+    # CaT
+    x1, y1 = test_channel_mod(channel="CaT", ion="ca", erev=None,
+                              gbar_var=None, gbar=None, amplitude=None, ca=True)
+
+    x2, data = test_channel_nml(
+        channel="CaT",
+        ion="ca",
+        erev="120.0 mV",
+        gbar=None,
         amplitude=None,
         record_data={},
         ca=True
