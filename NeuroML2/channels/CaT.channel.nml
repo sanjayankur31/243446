@@ -25,7 +25,7 @@ This version does not contribute to the calcium concentration and BK together wi
             <q10Settings type="q10ExpTemp" q10Factor="1.0913" experimentalTemp="32 degC"/>
 
             <timeCourse type="CaT_tau" A_tau="0.17746 per_ms" B_tau="0.13402 per_ms" C_tau="0.0076 per_ms" vshift="-6.6 mV" midpoint1="-58.535mV" midpoint2="-101.436mV" scale1="6.2692 mV" scale2="-5.5845 mV"/>
-            <steadyState type="CaT_inf" midpoint="-75.118 mV" vshift="-6.6 mV" scale="6.4635 mV" power="1"/>
+            <steadyState type="CaT_inf" rate="1.0" midpoint="-75.118 mV" vshift="-6.6 mV" scale="6.4635 mV" power="1"/>
         </gateHHtauInf>
     </ionChannel>
 
@@ -51,13 +51,14 @@ This version does not contribute to the calcium concentration and BK together wi
     <ComponentType name="CaT_inf"
         extends="baseVoltageDepVariable">
 
+        <Parameter name="rate" dimension="none"/>
         <Parameter name="midpoint" dimension="voltage"/>
         <Parameter name="vshift" dimension="voltage"/>
         <Parameter name="scale" dimension="voltage"/>
         <Parameter name="power" dimension="none"/>
-        <Constant name="TIME_SCALE" value="1 ms" dimension="time" />
+        <Constant name="TIME_SCALE" value="1s" dimension="time" />
         <Dynamics>
-            <DerivedVariable name="x" exposure="x" dimension="per_time" value="(1.0 / (1 + exp((v - midpoint - vshift) / scale))^(power)) / TIME_SCALE"/>
+            <DerivedVariable name="x" exposure="x" dimension="per_time" value="(rate / (1 + exp((v - midpoint - vshift) / scale))^power) / TIME_SCALE"/>
         </Dynamics>
     </ComponentType>
 
