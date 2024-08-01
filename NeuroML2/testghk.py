@@ -204,7 +204,8 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
 def test_channel_nml(
     channel=None, ion=None, erev=None, amplitude=None, gbar=None,
     record_data={},
-    ca=False
+    ca=False,
+    new_channel_density=None
 ):
     """Generate script for GHK channel NML file
 
@@ -214,6 +215,7 @@ def test_channel_nml(
     """
     myrand = random.Random(123)
     shutil.rmtree("x86_64", ignore_errors=True)
+    include_extra_files = []
     newdoc = component_factory(neuroml.NeuroMLDocument, id="testdoc")
 
     newcell = newdoc.add(neuroml.Cell, id="testcell", validate=False)  # type: neuroml.Cell
@@ -253,19 +255,30 @@ def test_channel_nml(
         ion_chan_def_file="channels/pas.channel.nml",
     )
 
-    if channel:
-        newcell.add_channel_density_v(
-            channel_density_type="ChannelDensityGHK",
+    if channel and not new_channel_density:
+        newcell.add_channel_density(
             nml_cell_doc=newdoc,
             ion_chan_def_file=f"channels/{channel}.channel.nml",
             id=f"{channel}_chan",
             ion_channel=channel,
             ion=ion,
             segment_groups="all",
-            permeability="2.5e-7 m_per_s"  # 2.5e-4 cm_per_s in the mod file
         )
-
     else:
+        newdoc.add("IncludeType", href=f"channels/{channel}.channel.nml")
+        include_extra_files.append(f"channels/{new_channel_density}.xml")
+        new_cd = newcell.component_factory(
+            "Component",
+            id=f"{new_channel_density}_cd",
+            type="channelDensityGHKCaTZangEtAl",
+            ionChannel=channel,
+            ion=ion,
+            permeability="2.5e-7 m_per_s",  # 2.5e-4 cm_per_s in the mod file
+            vshift="-6.6 mV"
+        )
+        newcell.add_membrane_property(new_cd)
+
+    if not channel:
         channel = "pas"
 
     newcell.morphinfo(True)
@@ -297,18 +310,18 @@ def test_channel_nml(
     write_neuroml2_file(newdoc, f"Test_{channel}.net.nml")
 
     recorder_dict = {}
-    include_extra_files = []
+
     if channel != "pas":
-        include_extra_files = [f"channels/{channel}.channel.nml",
-                               "channels/ChannelDensityGHKCaTZangEtAl.nml"]
         # set up recording of state occupancies
         channel_doc = read_neuroml2_file(f"channels/{channel}.channel.nml")
         ion_channel_ghk = channel_doc.ion_channel[0]  # type: neuroml.IonChannelHH
         gates = get_channel_gates(ion_channel_ghk)
+
+        # note, the ID here needs to be the ID of the channel density component
         for gate in gates:
             recorder_dict[f"{timestamp}_{gate}_nml.dat"] = []
             recorder_dict[f"{timestamp}_{gate}_nml.dat"].append(
-                f"{newpop.id}[0]/biophys/membraneProperties/{channel}_chan/{channel}/{gate}/q"
+                f"{newpop.id}[0]/biophys/membraneProperties/{new_channel_density}_cd/{channel}/{gate}/q"
             )
     if ca is True:
         recorder_dict[f"{timestamp}_ca_nml.dat"] = [f"{newpop.id}[0]/caConc"]
@@ -389,12 +402,12 @@ def test_channel_nml(
             title_above_plot="NML",
             legend_position="outer right"
         )
-        return [recorded_time] * len(data.values()), data
+    return [recorded_time] * len(data.values()), data
 
 
 if __name__ == "__main__":
     # CaT
-    x1, y1 = test_channel_mod(channel="CaT", ion="ca", erev="120.0", gbar_var=None, gbar=None, amplitude=None, ca=True)
+    # x1, y1 = test_channel_mod(channel="CaT", ion="ca", erev="120.0", gbar_var=None, gbar=None, amplitude=None, ca=True)
 
     x2, data = test_channel_nml(
         channel="CaT",
@@ -403,8 +416,11 @@ if __name__ == "__main__":
         gbar=None,
         amplitude=None,
         record_data={},
-        ca=True
+        ca=True,
+        new_channel_density="ChannelDensityGHKCaTZangEtAl"
     )
+
+    """
 
     # generate combined plot
     myrand = random.Random(123)
@@ -425,3 +441,4 @@ if __name__ == "__main__":
         title_above_plot="Combined states",
         legend_position="outer right"
     )
+    """
