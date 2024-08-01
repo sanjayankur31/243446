@@ -407,7 +407,7 @@ def test_channel_nml(
 
 if __name__ == "__main__":
     # CaT
-    # x1, y1 = test_channel_mod(channel="CaT", ion="ca", erev="120.0", gbar_var=None, gbar=None, amplitude=None, ca=True)
+    x1, y1 = test_channel_mod(channel="CaT", ion="ca", erev="120.0", gbar_var=None, gbar=None, amplitude=None, ca=True)
 
     x2, data = test_channel_nml(
         channel="CaT",
@@ -419,8 +419,6 @@ if __name__ == "__main__":
         ca=True,
         new_channel_density="ChannelDensityGHKCaTZangEtAl"
     )
-
-    """
 
     # generate combined plot
     myrand = random.Random(123)
@@ -441,4 +439,3 @@ if __name__ == "__main__":
         title_above_plot="Combined states",
         legend_position="outer right"
     )
-    """
