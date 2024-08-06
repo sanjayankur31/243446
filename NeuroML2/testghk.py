@@ -168,7 +168,7 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
             show_plot_already=True,
             xaxis="time (ms)",
             yaxis="conc",
-            save_figure_to=f"{timestamp}_test_{channel}_ca_NEURON.png",
+            save_figure_to=f"{timestamp}_test_{channel.lower()}_ca_NEURON.png",
             title_above_plot="NEURON",
             legend_position="outer right"
         )
@@ -180,7 +180,7 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
             show_plot_already=True,
             xaxis="time (ms)",
             yaxis="i",
-            save_figure_to=f"{timestamp}_test_{channel}_i.png",
+            save_figure_to=f"{timestamp}_test_{channel.lower()}_ca_i_NEURON.png",
             title_above_plot="NEURON",
             legend_position="outer right"
         )
@@ -195,12 +195,15 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
         xaxis="time (ms)",
         yaxis="rate",
         ylim=[-0.1, 1.1],
-        save_figure_to=f"{timestamp}_test_{channel}_states_NEURON.png",
+        save_figure_to=f"{timestamp}_test_{channel.lower()}_states_NEURON.png",
         title_above_plot="NEURON",
         legend_position="outer right"
     )
 
-    return [tRec.to_python()] * len(states), [rec.to_python() for rec in states_rec]
+    return {"t": tRec.to_python(),
+            "states": [rec.to_python() for rec in states_rec],
+            "ica": iRec.to_python()
+            }
     """
     with open(f"{timestamp}_states_nrn.dat", 'w') as f:
         xvalues = tRec.to_python()
@@ -337,6 +340,7 @@ def test_channel_nml(
             )
     if ca is True:
         recorder_dict[f"{timestamp}_ca_nml.dat"] = [f"{newpop.id}[0]/caConc"]
+        recorder_dict[f"{timestamp}_ca_i_nml.dat"] = [f"{newpop.id}[0]/biophys/membraneProperties/{new_channel_density}_cd/iDensity"]
 
     generate_lems_file_for_neuroml(
         sim_id=f"testsim_{channel}",
@@ -382,6 +386,21 @@ def test_channel_nml(
             legend_position="outer right"
         )
 
+        recorded_ca_i = numpy.array(data.get(f"{newpop.id}[0]/biophys/membraneProperties/{new_channel_density}_cd/iDensity"))
+        # match direction to NEURON
+        generate_plot(
+            xvalues=[recorded_time],
+            yvalues=[recorded_ca_i * -1],
+            title="NML",
+            labels=["iCa"],
+            show_plot_already=True,
+            xaxis="time (ms)",
+            yaxis="i",
+            save_figure_to=f"{timestamp}_test_{channel.lower()}_ca_i_NML.png",
+            title_above_plot="NML",
+            legend_position="outer right"
+        )
+
     generate_plot(
         xvalues=[recorded_time],
         yvalues=[recorded_v],
@@ -414,15 +433,17 @@ def test_channel_nml(
             title_above_plot="NML",
             legend_position="outer right"
         )
-    return [recorded_time] * len(data.values()), data
+    return recorded_time, data
 
 
 if __name__ == "__main__":
     # CaT
-    x1, y1 = test_channel_mod(channel="CaT", ion="ca", erev="120.0", gbar_var=None, gbar=None, amplitude=None, ca=True)
+    nrn_data = test_channel_mod(channel="CaT", ion="ca", erev="120.0", gbar_var=None, gbar=None, amplitude=None, ca=True)
+    x1 = nrn_data["t"] * len(nrn_data["states"])
+    x2 = nrn_data["states"]
+    nrn_cai = nrn_data["ica"]
 
 
-    """
     x2, data = test_channel_nml(
         channel="CaT",
         ion="ca",
@@ -433,7 +454,28 @@ if __name__ == "__main__":
         ca=True,
         new_channel_density="ChannelDensityGHKCaTZangEtAl"
     )
+    recorded_ca_i = None
+    for key, value in data.items():
+        if "iDensity" in key:
+            recorded_ca_i_key = key
+            break
 
+    # pop outside the loop
+    recorded_ca_i = numpy.array(data.pop(key)) * -1
+
+    generate_plot(
+        xvalues=[nrn_data["t"], x2],
+        yvalues=[nrn_cai, recorded_ca_i],
+        title="CaI (both)",
+        labels=["nrn", "nml"],
+        show_plot_already=True,
+        xaxis="time (ms)",
+        yaxis="i",
+        # save_figure_to=f"{timestamp}_test_{channel.lower()}_states_NML.png",
+        title_above_plot="Combined currents",
+        legend_position="outer right"
+    )
+    """
     # generate combined plot
     myrand = random.Random(123)
     colors = [get_next_hex_color(myrand) for i in range(len(data.values()))]
