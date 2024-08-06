@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
 """
-Generate scripts to test KS channels.
+Generate scripts to test GHK conductances.
 
-Since we don't currently have the protocol implemented for the NeuroML
-channels.
-
-File: testks.py
+File: testghk.py
 
 Copyright 2024 Ankur Sinha
 Author: Ankur Sinha <sanjay DOT ankur AT gmail DOT com>
@@ -82,8 +79,8 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
             h.nrn_load_dll("x86_64/.libs/libnrnmech.so")
             soma.insert(str("CaClamp"))
 
-            ca_obj = getattr(soma(0.5), "_ref_cai")
-            caRec = h.Vector().record(ca_obj)
+        ca_obj = getattr(soma(0.5), "_ref_cai")
+        caRec = h.Vector().record(ca_obj)
 
     if channel:
         states_rec = []
@@ -123,6 +120,9 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
         for s in states:
             chan_obj = getattr(soma(0.5), f"_ref_{s}_{channel}")
             states_rec.append(h.Vector().record(chan_obj))
+
+        current_obj = getattr(soma(0.5), f"_ref_iCa_{channel}")
+        iRec = h.Vector().record(current_obj)
     else:
         channel = "pas"
 
@@ -169,6 +169,18 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
             xaxis="time (ms)",
             yaxis="conc",
             save_figure_to=f"{timestamp}_test_{channel}_ca_NEURON.png",
+            title_above_plot="NEURON",
+            legend_position="outer right"
+        )
+        generate_plot(
+            xvalues=[tRec.to_python()],
+            yvalues=[iRec.to_python()],
+            title="NEURON",
+            labels=["iCa"],
+            show_plot_already=True,
+            xaxis="time (ms)",
+            yaxis="i",
+            save_figure_to=f"{timestamp}_test_{channel}_i.png",
             title_above_plot="NEURON",
             legend_position="outer right"
         )
@@ -409,6 +421,8 @@ if __name__ == "__main__":
     # CaT
     x1, y1 = test_channel_mod(channel="CaT", ion="ca", erev="120.0", gbar_var=None, gbar=None, amplitude=None, ca=True)
 
+
+    """
     x2, data = test_channel_nml(
         channel="CaT",
         ion="ca",
@@ -439,3 +453,4 @@ if __name__ == "__main__":
         title_above_plot="Combined states",
         legend_position="outer right"
     )
+    """
