@@ -1,12 +1,13 @@
-<Lems xmlns="http://www.neuroml.org/lems/0.7.6"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.neuroml.org/lems/0.7.6 ../../LEMS/Schemas/LEMS/LEMS_v0.7.6.xsd"
-      description="Defines voltage (and concentration) gated ion channel models. Ion channels will generally extend _baseIonChannel_. The most commonly used voltage dependent gate will extend _baseGate_.">
-
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta4.xsd"
+         id="CaClamp">
     <ComponentType name="channelDensityGHKCaTZangEtAl"
         extends="baseChannelDensity"
         description="Specifies a time varying conductance density, _gDensity, which is distributed on an area of the cell, producing a current density _iDensity and whose reversal potential is calculated from the Goldman Hodgkin Katz equation. Hard coded for Ca only! See https://github.com/OpenSourceBrain/ghk-nernst. Modification of the NeuroML Component Type definition for CaT channel in Zang et al 2018.">
 
+        <!-- pcabar -->
         <Parameter name="permeability" dimension="permeability"/>
         <!-- note: without a vshift magnitude, the dynamics are garbage -->
         <Parameter name="vshift" dimension="voltage"/>
@@ -30,12 +31,12 @@
             <DerivedVariable name="zetaExp" dimension="none"  value="exp(-zeta)"/>
             <DerivedVariable name="cond" dimension="none"  value="1 - zetaExp"/>
             <DerivedVariable name="cond_abs" dimension="none"  value="abs(cond)"/>
+            <!-- m^3 * h -->
             <DerivedVariable name="channelf" dimension="none" select="ionChannel/fopen"/>
 
-	    <!--TODO: used conditional var, just as in nernst above, to circumvent problems with initialization.  -->
             <ConditionalDerivedVariable name="iDensity"  dimension="currentDensity" exposure="iDensity">
-	            <Case condition="cond_abs .gt. 1e-6" value="-1 * channelf * permeability * zCa * zeta * F * ( caConc - (caConcExt * zetaExp) ) / (1 - zetaExp)"/>
-                <Case value="-1 * channelf * permeability * zCa * F * ( caConc - (caConcExt * zetaExp) ) * (1 + (zeta/2))"/>
+                <Case condition="cond_abs .lt. 1e-6" value="-1 * (channelf * permeability) * (zCa * F) * ( caConc - (caConcExt * zetaExp) ) * (1 + (zeta/2))"/>
+	            <Case value="-1 * (channelf * permeability) * (zCa * zeta * F) * ( caConc - (caConcExt * zetaExp) ) / (1 - zetaExp)"/>
             </ConditionalDerivedVariable>
 
         </Dynamics>
@@ -44,4 +45,4 @@
         </Structure>
     </ComponentType>
 
-</Lems>
+</neuroml>

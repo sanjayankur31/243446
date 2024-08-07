@@ -8,6 +8,7 @@ Copyright 2024 Ankur Sinha
 Author: Ankur Sinha <sanjay DOT ankur AT gmail DOT com>
 """
 
+import copy
 import matplotlib
 import shutil
 import neuroml
@@ -78,6 +79,8 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
                 return 1
             h.nrn_load_dll("x86_64/.libs/libnrnmech.so")
             soma.insert(str("CaClamp"))
+            # setattr(soma(0.5), "conc0_CaClamp", 1E-4)
+            # setattr(soma(0.5), "conc1_CaClamp", 1.5E-4)
 
         ca_obj = getattr(soma(0.5), "_ref_cai")
         caRec = h.Vector().record(ca_obj)
@@ -153,7 +156,7 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
         show_plot_already=True,
         xaxis="time (ms)",
         yaxis="v (mV)",
-        ylim=[-85, 100],
+        ylim=[-85, 200],
         save_figure_to=f"{timestamp}_test_{channel}_NEURON.png",
         title_above_plot="NEURON",
         legend_position="outer right"
@@ -174,7 +177,7 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
         )
         generate_plot(
             xvalues=[tRec.to_python()],
-            yvalues=[iRec.to_python()],
+            yvalues=[numpy.array(iRec.to_python()) * 10],  # convert to SI
             title="NEURON",
             labels=["iCa"],
             show_plot_already=True,
@@ -202,7 +205,7 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
 
     return {"t": tRec.to_python(),
             "states": [rec.to_python() for rec in states_rec],
-            "ica": iRec.to_python()
+            "ica": list(numpy.array(iRec.to_python()) * 10)  # conver to SI
             }
     """
     with open(f"{timestamp}_states_nrn.dat", 'w') as f:
@@ -243,10 +246,13 @@ def test_channel_nml(
     # set calcium concentrations
     if ca is True:
         newdoc.add(neuroml.IncludeType, href="channels/CaClamp.nml")
+        newdoc.add("Component", id="CaClamp", type="caClamp",
+                   conc0="1E-4 mM", conc1="1.5E-4mM",
+                   delay="500.0ms", duration="500.0ms", ion="ca")
         newcell.add_intracellular_property(
             "Species", id="ca", ion="ca", concentration_model="CaClamp",
-            initial_concentration="5.0E-11 mol_per_cm3",
-            initial_ext_concentration="2.0E-6 mol_per_cm3"
+            initial_concentration="1E-4 mM",
+            initial_ext_concentration="2.0 mM"
         )
 
     newcell.add_segment(
@@ -281,14 +287,14 @@ def test_channel_nml(
         )
     else:
         newdoc.add("IncludeType", href=f"channels/{channel}.channel.nml")
-        include_extra_files.append(f"channels/{new_channel_density}.xml")
+        newdoc.add("IncludeType", href=f"channels/{new_channel_density}.nml")
         new_cd = newcell.component_factory(
             "Component",
             id=f"{new_channel_density}_cd",
             type="channelDensityGHKCaTZangEtAl",
             ionChannel=channel,
             ion=ion,
-            permeability="2.5e-7 m_per_s",  # 2.5e-4 cm_per_s in the mod file
+            permeability="2.5e-4 cm_per_s",
             vshift="-6.6 mV"
         )
         newcell.add_membrane_property(new_cd)
@@ -409,19 +415,29 @@ def test_channel_nml(
         show_plot_already=True,
         xaxis="time (ms)",
         yaxis="v (mV)",
-        ylim=[-85, 100],
+        ylim=[-85, 200],
         save_figure_to=f"{timestamp}_test_{channel.lower()}_NML.png",
         title_above_plot="NML",
         legend_position="outer right"
     )
 
-    colors = [get_next_hex_color(myrand) for i in range(len(data.values()))]
+    # plot states, but remove Ca density etc.
+    recorded_ca_i_key = None
+    data_copy = copy.deepcopy(data)
+    for key, value in data_copy.items():
+        if "iDensity" in key:
+            recorded_ca_i_key = key
+            break
+    if recorded_ca_i_key is not None:
+        data_copy.pop(recorded_ca_i_key)
+
+    colors = [get_next_hex_color(myrand) for i in range(len(data_copy.values()))]
     if channel != "pas":
         # states
-        labels = [alab.split("/")[-2] for alab in data.keys()]
+        labels = [alab.split("/")[-2] for alab in data_copy.keys()]
         generate_plot(
-            xvalues=[recorded_time] * len(data.values()),
-            yvalues=list(data.values()),
+            xvalues=[recorded_time] * len(data_copy.values()),
+            yvalues=list(data_copy.values()),
             title="NML",
             labels=labels,
             colors=colors,
@@ -438,11 +454,13 @@ def test_channel_nml(
 
 if __name__ == "__main__":
     # CaT
-    nrn_data = test_channel_mod(channel="CaT", ion="ca", erev="120.0", gbar_var=None, gbar=None, amplitude=None, ca=True)
-    x1 = nrn_data["t"] * len(nrn_data["states"])
-    x2 = nrn_data["states"]
-    nrn_cai = nrn_data["ica"]
+    nrn_data = test_channel_mod(channel="CaT", ion="ca", erev="120.0",
+                                gbar_var=None, gbar=None, amplitude=None,
+                                ca=True)
 
+    x1 = [nrn_data["t"]] * len(nrn_data["states"])
+    y1 = nrn_data["states"]
+    nrn_cai = nrn_data.get("ica", None)
 
     x2, data = test_channel_nml(
         channel="CaT",
@@ -454,35 +472,36 @@ if __name__ == "__main__":
         ca=True,
         new_channel_density="ChannelDensityGHKCaTZangEtAl"
     )
-    recorded_ca_i = None
+
+    recorded_ca_i_key = None
     for key, value in data.items():
         if "iDensity" in key:
             recorded_ca_i_key = key
             break
 
     # pop outside the loop
-    recorded_ca_i = numpy.array(data.pop(key)) * -1
+    if recorded_ca_i_key is not None and nrn_cai is not None:
+        recorded_ca_i = numpy.array(data.pop(key)) * -1
+        generate_plot(
+            xvalues=[nrn_data["t"], x2],
+            yvalues=[nrn_cai, recorded_ca_i],
+            title="CaI (both)",
+            labels=["nrn", "nml"],
+            show_plot_already=True,
+            xaxis="time (ms)",
+            yaxis="i",
+            # save_figure_to=f"{timestamp}_test_{channel.lower()}_states_NML.png",
+            title_above_plot="Combined currents",
+            legend_position="outer right"
+        )
 
-    generate_plot(
-        xvalues=[nrn_data["t"], x2],
-        yvalues=[nrn_cai, recorded_ca_i],
-        title="CaI (both)",
-        labels=["nrn", "nml"],
-        show_plot_already=True,
-        xaxis="time (ms)",
-        yaxis="i",
-        # save_figure_to=f"{timestamp}_test_{channel.lower()}_states_NML.png",
-        title_above_plot="Combined currents",
-        legend_position="outer right"
-    )
-    """
-    # generate combined plot
+    # generate combined plot of states
     myrand = random.Random(123)
     colors = [get_next_hex_color(myrand) for i in range(len(data.values()))]
     labels = [alab.split("/")[-2] + " nrn" for alab in data.keys()]
     labels += [alab.split("/")[-2] + " nml" for alab in data.keys()]
     generate_plot(
-        xvalues=x1 + x2,
+        xvalues=x1 + [x2] * len(data.values()),
         yvalues=y1 + list(data.values()),
         title="Combined states",
         labels=labels,
@@ -495,4 +514,3 @@ if __name__ == "__main__":
         title_above_plot="Combined states",
         legend_position="outer right"
     )
-    """
