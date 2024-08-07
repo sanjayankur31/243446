@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Generate scripts to test GHK conductances.
+Generate scripts to test CaT channel (GHK based that requires a new component type definition).
 
-File: testghk.py
+File: testcat.py
 
 Copyright 2024 Ankur Sinha
 Author: Ankur Sinha <sanjay DOT ankur AT gmail DOT com>
@@ -65,7 +65,7 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
 
     soma.insert("pas")
     soma(0.5).g_pas = g_pas
-    soma(0.5).e_pas = -65
+    soma(0.5).e_pas = -90
 
     if ca is True:
         try:
@@ -79,8 +79,8 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
                 return 1
             h.nrn_load_dll("x86_64/.libs/libnrnmech.so")
             soma.insert(str("CaClamp"))
-            # setattr(soma(0.5), "conc0_CaClamp", 1E-4)
-            # setattr(soma(0.5), "conc1_CaClamp", 1.5E-4)
+            setattr(soma(0.5), "conc0_CaClamp", 1E-5)
+            setattr(soma(0.5), "conc1_CaClamp", 1E-8)
 
         ca_obj = getattr(soma(0.5), "_ref_cai")
         caRec = h.Vector().record(ca_obj)
@@ -247,7 +247,7 @@ def test_channel_nml(
     if ca is True:
         newdoc.add(neuroml.IncludeType, href="channels/CaClamp.nml")
         newdoc.add("Component", id="CaClamp", type="caClamp",
-                   conc0="1E-4 mM", conc1="1.5E-4mM",
+                   conc0="1E-5 mM", conc1="1E-8mM",
                    delay="500.0ms", duration="500.0ms", ion="ca")
         newcell.add_intracellular_property(
             "Species", id="ca", ion="ca", concentration_model="CaClamp",
@@ -271,7 +271,7 @@ def test_channel_nml(
         ion_channel="pas",
         ion="non_specific",
         group_id="all",
-        erev="-65mV",
+        erev="-90mV",
         cond_density=f"{g_pas} S_per_cm2",
         ion_chan_def_file="channels/pas.channel.nml",
     )
