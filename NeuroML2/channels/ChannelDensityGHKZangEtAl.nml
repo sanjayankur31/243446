@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <neuroml xmlns="http://www.neuroml.org/schema/neuroml2"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta4.xsd"
-         id="CaClamp">
+         xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2.3.xsd"
+         id="ChannelDensity_GHKZangEtAl">
+
     <ComponentType name="channelDensityGHKZangEtAl"
         extends="baseChannelDensity"
         description="Specifies a time varying conductance density, _gDensity, which is distributed on an area of the cell, producing a current density _iDensity and whose reversal potential is calculated from the Goldman Hodgkin Katz equation. Hard coded for Ca only! See https://github.com/OpenSourceBrain/ghk-nernst. Modification of the NeuroML Component Type definition for CaT/CaP channels in Zang et al 2018.">
