@@ -47,7 +47,7 @@ PARAMETER {
 
 	cai (mM)
 	cao (mM)
-    vshift =0
+    vshift = -5 : to match the purkinje_demo hoc file
 	pcabar = 6e-5 (cm/s)
 	monovalConc = 140 (mM)
 	monovalPerm = 0
