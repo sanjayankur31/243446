@@ -291,7 +291,7 @@ def test_channel_nml(
         new_cd = newcell.component_factory(
             "Component",
             id=f"{new_channel_density}_cd",
-            type="channelDensityGHKCaTZangEtAl",
+            type="channelDensityGHKZangEtAl",
             ionChannel=channel,
             ion=ion,
             permeability="2.5e-4 cm_per_s",
@@ -470,7 +470,7 @@ if __name__ == "__main__":
         amplitude=None,
         record_data={},
         ca=True,
-        new_channel_density="ChannelDensityGHKCaTZangEtAl"
+        new_channel_density="ChannelDensityGHKZangEtAl"
     )
 
     recorded_ca_i_key = None
