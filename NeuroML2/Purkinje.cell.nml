@@ -1,0 +1,9 @@
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2"  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2.3.1.xsd" id="ZangEtAl2018_Purkinje_cell_doc">
+    <include href="Purkinje.morph.cell.nml"/>
+    <cell id="ZangEtAl2018_Purkinje_Cell" morphology="Purkinje_cell_morph">
+        <biophysicalProperties id="biophys">
+            <membraneProperties/>
+            <intracellularProperties/>
+        </biophysicalProperties>
+    </cell>
+</neuroml>
