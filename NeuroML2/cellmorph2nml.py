@@ -45,20 +45,20 @@ def main(acell):
 
     os.remove(loader_hoc_file)
 
-    # extract only the cell from the exported file
+    # extract only the cell morphology from the exported file
     neuroml_document = read_neuroml2_file(neuroml_morph_export_file)
-    purkinje_cell = neuroml_document.cells[0]
-    purkinje_cell.id = "Purkinje_cell"
-    purkinje_cell.notes += """
-Original model:
-Zang, Y.; Dieudonné, S. &
-Schutter, E. D. Voltage- and Branch-Specific Climbing Fiber Responses in
-Purkinje Cells Cell Reports, Elsevier BV, 2018, 24, 1536-1549
-
-https://doi.org/10.1016/j.celrep.2018.07.011
-    """
-    new_document = neuroml.NeuroMLDocument(id="ZangEtAl2018_Purkinje_cell")
-    new_document.add(purkinje_cell)
+    purkinje_cell_morph = neuroml_document.cells[0].morphology
+    purkinje_cell_morph.id = "Purkinje_cell_morph"
+#     purkinje_cell_morph.notes += """
+# Original model:
+# Zang, Y.; Dieudonné, S. &
+# Schutter, E. D. Voltage- and Branch-Specific Climbing Fiber Responses in
+# Purkinje Cells Cell Reports, Elsevier BV, 2018, 24, 1536-1549
+#
+# https://doi.org/10.1016/j.celrep.2018.07.011
+#     """
+    new_document = neuroml.NeuroMLDocument(id="ZangEtAl2018_Purkinje_cell_morph")
+    new_document.add(purkinje_cell_morph)
     write_neuroml2_file(new_document, neuroml_morph_file, validate=True)
 
     print(
