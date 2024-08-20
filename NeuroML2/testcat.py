@@ -317,8 +317,8 @@ def test_channel_nml(
             type="channelDensityGHKZangEtAl",
             ionChannel=channel,
             ion=ion,
-            permeability="2.5E-4 cm_per_s",
-            vshift="0.0 mV"  # no vshift for CaT
+            permeability="2.5E-4 cm_per_s",  # different from CaP
+            vshift="-6.6 mV"  # vshift present here, but not in CaP
         )
         newcell.add_membrane_property(new_cd)
 
