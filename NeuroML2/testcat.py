@@ -34,8 +34,8 @@ g_pas = 1 / 120236  # 1/ohm-cm2
 
 
 def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None, amplitude=None,
-                     ca=False):
-    """Generate script for KS channel mod file
+                     ca=False, ca_clamp=False):
+    """Generate script for GHK channel mod file
 
     :param channel_file: TODO
     :returns: TODO
@@ -67,7 +67,7 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
     soma(0.5).g_pas = g_pas
     soma(0.5).e_pas = -90
 
-    if ca is True:
+    if ca_clamp is True:
         try:
             soma.insert("CaClamp")
         except ValueError:
@@ -80,7 +80,9 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
             h.nrn_load_dll("x86_64/.libs/libnrnmech.so")
             soma.insert(str("CaClamp"))
             setattr(soma(0.5), "conc0_CaClamp", 1E-5)
-            setattr(soma(0.5), "conc1_CaClamp", 1E-8)
+            setattr(soma(0.5), "conc1_CaClamp", 1E-4)
+            setattr(soma(0.5), "cai", 1E-4)
+            setattr(soma(0.5), "cao", 2)
 
         ca_obj = getattr(soma(0.5), "_ref_cai")
         caRec = h.Vector().record(ca_obj)
@@ -141,6 +143,11 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
 
     v0 = -65.0  # Pre holding potential
 
+    if ca_clamp is False:
+        print("No calcium clamp, but calcium ion included, so NEURON initialises them!")
+        print("cai, by default is: " + str(getattr(soma(0.5), "cai")))
+        print("cao, by default is: " + str(getattr(soma(0.5), "cao")))
+
     h.finitialize(v0)
     h.dt = 0.01
     h.continuerun(1500)
@@ -156,13 +163,13 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
         show_plot_already=True,
         xaxis="time (ms)",
         yaxis="v (mV)",
-        ylim=[-85, 200],
+        ylim=[-200, 200],
         save_figure_to=f"{timestamp}_test_{channel}_NEURON.png",
         title_above_plot="NEURON",
         legend_position="outer right"
     )
 
-    if ca is not False:
+    if ca_clamp is True:
         generate_plot(
             xvalues=[tRec.to_python()],
             yvalues=[caRec.to_python()],
@@ -175,6 +182,7 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
             title_above_plot="NEURON",
             legend_position="outer right"
         )
+    if ca is True:
         generate_plot(
             xvalues=[tRec.to_python()],
             yvalues=[numpy.array(iRec.to_python()) * 10],  # convert to SI
@@ -205,7 +213,7 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
 
     return {"t": tRec.to_python(),
             "states": [rec.to_python() for rec in states_rec],
-            "ica": list(numpy.array(iRec.to_python()) * 10)  # conver to SI
+            "iCa": list(numpy.array(iRec.to_python()) * 10)  # conver to SI
             }
     """
     with open(f"{timestamp}_states_nrn.dat", 'w') as f:
@@ -222,7 +230,7 @@ def test_channel_mod(channel=None, ion=None, erev=None, gbar_var=None, gbar=None
 def test_channel_nml(
     channel=None, ion=None, erev=None, amplitude=None, gbar=None,
     record_data={},
-    ca=False,
+    ca=False, ca_clamp=False,
     new_channel_density=None
 ):
     """Generate script for GHK channel NML file
@@ -244,14 +252,29 @@ def test_channel_nml(
     newcell.set_init_memb_potential("-65 mV")
 
     # set calcium concentrations
-    if ca is True:
+    # if we don't set a ca clamp, at least set to the same defaults that NEURON
+    # does, otherwise it's confusing why we get different results
+    if ca is True and ca_clamp is False:
         newdoc.add(neuroml.IncludeType, href="channels/CaClamp.nml")
         newdoc.add("Component", id="CaClamp", type="caClamp",
-                   conc0="1E-5 mM", conc1="1E-8mM",
+                   conc0="5E-5 mM", conc1="5E-5mM",
                    delay="500.0ms", duration="500.0ms", ion="ca")
         newcell.add_intracellular_property(
             "Species", id="ca", ion="ca", concentration_model="CaClamp",
-            initial_concentration="1E-4 mM",
+            initial_concentration="5E-5 mM",
+            initial_ext_concentration="2.0 mM"
+        )
+    # if we do explicity set a calcium clamp, set the right values
+    # note that if they initialise cai and cao explicitly, we must updat our
+    # defaults below also
+    if ca_clamp is True:
+        newdoc.add(neuroml.IncludeType, href="channels/CaClamp.nml")
+        newdoc.add("Component", id="CaClamp", type="caClamp",
+                   conc0="1E-5 mM", conc1="1E-4mM",
+                   delay="500.0ms", duration="500.0ms", ion="ca")
+        newcell.add_intracellular_property(
+            "Species", id="ca", ion="ca", concentration_model="CaClamp",
+            initial_concentration="5E-5 mM",
             initial_ext_concentration="2.0 mM"
         )
 
@@ -294,8 +317,8 @@ def test_channel_nml(
             type="channelDensityGHKZangEtAl",
             ionChannel=channel,
             ion=ion,
-            permeability="2.5e-4 cm_per_s",
-            vshift="-6.6 mV"
+            permeability="2.5E-4 cm_per_s",
+            vshift="0.0 mV"  # no vshift for CaT
         )
         newcell.add_membrane_property(new_cd)
 
@@ -415,7 +438,7 @@ def test_channel_nml(
         show_plot_already=True,
         xaxis="time (ms)",
         yaxis="v (mV)",
-        ylim=[-85, 200],
+        ylim=[-200, 200],
         save_figure_to=f"{timestamp}_test_{channel.lower()}_NML.png",
         title_above_plot="NML",
         legend_position="outer right"
@@ -454,22 +477,30 @@ def test_channel_nml(
 
 if __name__ == "__main__":
     # CaT
-    nrn_data = test_channel_mod(channel="CaT", ion="ca", erev="120.0",
-                                gbar_var=None, gbar=None, amplitude=None,
-                                ca=True)
+    # Ca, not ca for NEURON
+    nrn_data = test_channel_mod(channel="CaT", ion="Ca", erev=None,
+                                gbar_var=None, gbar=None, amplitude=0.0005,
+                                ca=True, ca_clamp=True)
 
     x1 = [nrn_data["t"]] * len(nrn_data["states"])
     y1 = nrn_data["states"]
-    nrn_cai = nrn_data.get("ica", None)
+    nrn_cai = nrn_data.get("iCa", None)
 
+    # ion is different here because it's not the standard calcium. This channel
+    # reads the standard calcium but generates a different current density, and
+    # does not contribute to the calcium concentration. So we call the ion
+    # Caion_CaT
+
+    # in the original neuron, this is called Ca (capital C)
     x2, data = test_channel_nml(
         channel="CaT",
-        ion="ca",
-        erev="120.0 mV",
+        ion="Caion_CaT",
+        erev=None,
         gbar=None,
-        amplitude=None,
+        amplitude="0.0005 nA",
         record_data={},
         ca=True,
+        ca_clamp=True,
         new_channel_density="ChannelDensityGHKZangEtAl"
     )
 

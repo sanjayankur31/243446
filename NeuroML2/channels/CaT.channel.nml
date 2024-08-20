@@ -3,7 +3,8 @@
 
     <notes>NeuroML file containing a single Channel description</notes>
 
-    <ionChannel id="CaT" conductance="10pS" type="ionChannelHH" species="ca">
+    <!-- this is not the standard calcium, since they don't want it to contribute to the standard calcium current or its concentration, so call the ion something else -->
+    <ionChannel id="CaT" conductance="10pS" type="ionChannelHH" species="Caion_CaT">
         <notes>Low threshold calcium current Cerebellum Purkinje Cell Model
 Q10 is estimated from this work, Temperature dependence of T-type Calcium channel gating, NEUROSCIENCE
 written by Yunliang Zang according to the data provided by Stephane Diudone, compared with the summarised data from stephane,
