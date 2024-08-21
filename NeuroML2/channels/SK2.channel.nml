@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta4.xsd" id="Golgi_KAHP">
+
+    <notes>ChannelML file containing a single Channel description from Solinas et al 2007</notes>
+
+    <ionChannelKS id="SK2" conductance="10pS" species="k">
+
+        <notes>SK type Ca2+ dependent K+ channel (After HyperPolarizing)</notes>
+        <annotation>
+            <rdf:RDF xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:orcid="https://orcid.org/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" >
+              <rdf:Description rdf:about="SK2">
+                <dc:title>NeuroML conversion of SK2 channel from Zang et al</dc:title>
+                <dc:description>SK type Ca2+ dependent K+ channel (After HyperPolarizing)</dc:description>
+                <bqbiol:isPartOf>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/sao471801888"/>
+                  </rdf:Bag>
+                </bqbiol:isPartOf>
+                <dc:source>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://modeldb.science/243446"/>
+                    <rdf:li rdf:resource="https://github.com/ModelDBRepository/243446"/>
+                  </rdf:Bag>
+                </dc:source>
+                <bqmodel:isDerivedFrom>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://modeldb.science/80769"/>
+                    <rdf:li rdf:resource="https://github.com/OpenSourceBrain/SolinasEtAl-GolgiCell/blob/master/NeuroML2/Golgi_KAHP.channel.nml"/>
+                  </rdf:Bag>
+                </bqmodel:isDerivedFrom>
+                <rdfs:seeAlso>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://doi.org/10.1085/jgp.111.4.565"/>
+                  </rdf:Bag>
+                </rdfs:seeAlso>
+                <bqmodel:isDescribedBy>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://doi.org/10.3389/neuro.03.002.2007"/>
+                  </rdf:Bag>
+                </bqmodel:isDescribedBy>
+                <dc:creator>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="#Sergio_Solinas"/>
+                    <rdf:li rdf:resource="#Lia_Forti"/>
+                    <rdf:li rdf:resource="#Egidio_D'Angelo"/>
+                  </rdf:Bag>
+                </dc:creator>
+                <dc:contributor>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="#Padraig_Gleeson"/>
+                    <rdf:li rdf:resource="#Ankur_Sinha"/>
+                  </rdf:Bag>
+                </dc:contributor>
+                <dcterms:created>
+                  <rdf:Description>
+                    <dcterms:W3CDTF>2019-12-09</dcterms:W3CDTF>
+                  </rdf:Description>
+                </dcterms:created>
+                <dcterms:modified>
+                  <rdf:Description>
+                    <dcterms:W3CDTF>
+                      <rdf:Bag>
+                        <rdf:li>2024-06-05</rdf:li>
+                      </rdf:Bag>
+                    </dcterms:W3CDTF>
+                  </rdf:Description>
+                </dcterms:modified>
+              </rdf:Description>
+              <rdf:Description rdf:about="#Lia_Forti">
+                <foaf:name>Lia Forti</foaf:name>
+              </rdf:Description>
+              <rdf:Description rdf:about="#Ankur_Sinha">
+                <foaf:name>Ankur Sinha</foaf:name>
+                <orcid:id rdf:resource="https://orcid.org/0000-0001-7568-7167"/>
+              </rdf:Description>
+              <rdf:Description rdf:about="#Padraig_Gleeson">
+                <foaf:name>Padraig Gleeson</foaf:name>
+                <orcid:id rdf:resource="https://orcid.org/0000-0001-5963-8576"/>
+              </rdf:Description>
+              <rdf:Description rdf:about="#Sergio_Solinas">
+                <foaf:name>Sergio Solinas</foaf:name>
+              </rdf:Description>
+              <rdf:Description rdf:about="#Egidio_D'Angelo">
+                <foaf:name>Egidio D'Angelo</foaf:name>
+              </rdf:Description>
+            </rdf:RDF>
+        </annotation>
+
+        <gateKS id="n" instances="1">
+            <q10Settings type="q10ExpTemp" q10Factor="2.7" experimentalTemp="23 degC"/>
+            <closedState id="c1"/>
+            <closedState id="c2"/>
+            <closedState id="c3"/>
+            <closedState id="c4"/>
+            <openState id="o1"/>
+            <openState id="o2"/>
+<!--Transition: alpha_c1_c2, c1 -> c2-->
+            <forwardTransition id="alpha_c1_c2" from="c1" to="c2">
+                <rate type="Golgi_KAHP_n_alpha_c1_c2_rate"/>
+            </forwardTransition>
+<!--Transition: beta_c2_c1, c2 -> c1-->
+            <reverseTransition id="beta_c2_c1" from="c1" to="c2">
+                <rate type="Golgi_KAHP_n_beta_c2_c1_rate"/>
+            </reverseTransition>
+<!--Transition: alpha_c2_c3, c2 -> c3-->
+            <forwardTransition id="alpha_c2_c3" from="c2" to="c3">
+                <rate type="Golgi_KAHP_n_alpha_c2_c3_rate"/>
+            </forwardTransition>
+<!--Transition: beta_c3_c2, c3 -> c2-->
+            <reverseTransition id="beta_c3_c2" from="c2" to="c3">
+                <rate type="Golgi_KAHP_n_beta_c3_c2_rate"/>
+            </reverseTransition>
+<!--Transition: alpha_c3_c4, c3 -> c4-->
+            <forwardTransition id="alpha_c3_c4" from="c3" to="c4">
+                <rate type="Golgi_KAHP_n_alpha_c3_c4_rate"/>
+            </forwardTransition>
+<!--Transition: beta_c4_c3, c4 -> c3-->
+            <reverseTransition id="beta_c4_c3" from="c3" to="c4">
+                <rate type="Golgi_KAHP_n_beta_c4_c3_rate"/>
+            </reverseTransition>
+<!--Transition: alpha_c3_o1, c3 -> o1-->
+            <forwardTransition id="alpha_c3_o1" from="c3" to="o1">
+                <rate type="Golgi_KAHP_n_alpha_c3_o1_rate"/>
+            </forwardTransition>
+<!--Transition: beta_o1_c3, o1 -> c3-->
+            <reverseTransition id="beta_o1_c3" from="c3" to="o1">
+                <rate type="Golgi_KAHP_n_beta_o1_c3_rate"/>
+            </reverseTransition>
+<!--Transition: alpha_c4_o2, c4 -> o2-->
+            <forwardTransition id="alpha_c4_o2" from="c4" to="o2">
+                <rate type="Golgi_KAHP_n_alpha_c4_o2_rate"/>
+            </forwardTransition>
+<!--Transition: beta_o2_c4, o2 -> c4-->
+            <reverseTransition id="beta_o2_c4" from="c4" to="o2">
+                <rate type="Golgi_KAHP_n_beta_o2_c4_rate"/>
+            </reverseTransition>
+        </gateKS>
+
+    </ionChannelKS>
+
+    <ComponentType name="Golgi_KAHP_n_alpha_c1_c2_rate" extends="baseVoltageConcDepRate">
+        <Constant name="TIME_SCALE" dimension="time" value="1 ms"/>
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1 mV"/>
+        <Constant name="CONC_SCALE" dimension="concentration" value="1 mol_per_cm3"/>
+        <!--Note: this parameter (invc1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc1" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc2" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc3" dimension="none" value="200e-3"/>
+        <!--Note: this parameter (invo1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo1" dimension="none" value="1"/>
+        <!--Note: this parameter (invo2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo2" dimension="none" value="100e-3"/>
+        <!--Note: this parameter (diro1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro1" dimension="none" value="160e-3"/>
+        <!--Note: this parameter (diro2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro2" dimension="none" value="1.2"/>
+        <!--Note: this parameter (dirc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc2" dimension="none" value="200"/>
+        <!--Note: this parameter (dirc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc3" dimension="none" value="160"/>
+        <!--Note: this parameter (dirc4) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc4" dimension="none" value="80"/>
+        <!--Note: this parameter (diff) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diff" dimension="none" value="1"/>
+<!--Since the channel type is KS...-->
+        <Requirement name="rateScale" dimension="none"/>
+
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v / VOLT_SCALE"/>
+            <DerivedVariable name="ca_conc" dimension="none" value="caConc / CONC_SCALE"/>
+            <DerivedVariable name="inVc1" dimension="none" value="invc1"/>
+            <DerivedVariable name="inVc2" dimension="none" value="invc2"/>
+            <DerivedVariable name="inVc3" dimension="none" value="invc3"/>
+            <DerivedVariable name="inVo1" dimension="none" value="invo1"/>
+            <DerivedVariable name="inVo2" dimension="none" value="invo2"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * (dirc2 * (ca_conc*1e6/diff)) / TIME_SCALE"/>
+        </Dynamics>
+
+    </ComponentType>
+
+    <ComponentType name="Golgi_KAHP_n_beta_c2_c1_rate" extends="baseVoltageConcDepRate">
+        <Constant name="TIME_SCALE" dimension="time" value="1 ms"/>
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1 mV"/>
+        <Constant name="CONC_SCALE" dimension="concentration" value="1 mol_per_cm3"/>
+        <!--Note: this parameter (invc1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc1" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc2" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc3" dimension="none" value="200e-3"/>
+        <!--Note: this parameter (invo1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo1" dimension="none" value="1"/>
+        <!--Note: this parameter (invo2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo2" dimension="none" value="100e-3"/>
+        <!--Note: this parameter (diro1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro1" dimension="none" value="160e-3"/>
+        <!--Note: this parameter (diro2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro2" dimension="none" value="1.2"/>
+        <!--Note: this parameter (dirc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc2" dimension="none" value="200"/>
+        <!--Note: this parameter (dirc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc3" dimension="none" value="160"/>
+        <!--Note: this parameter (dirc4) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc4" dimension="none" value="80"/>
+        <!--Note: this parameter (diff) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diff" dimension="none" value="1"/>
+<!--Since the channel type is KS...-->
+        <Requirement name="rateScale" dimension="none"/>
+
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v / VOLT_SCALE"/>
+            <DerivedVariable name="ca_conc" dimension="none" value="caConc / CONC_SCALE"/>
+            <DerivedVariable name="inVc1" dimension="none" value="invc1"/>
+            <DerivedVariable name="inVc2" dimension="none" value="invc2"/>
+            <DerivedVariable name="inVc3" dimension="none" value="invc3"/>
+            <DerivedVariable name="inVo1" dimension="none" value="invo1"/>
+            <DerivedVariable name="inVo2" dimension="none" value="invo2"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * (inVc1) / TIME_SCALE"/>
+        </Dynamics>
+
+    </ComponentType>
+
+    <ComponentType name="Golgi_KAHP_n_alpha_c2_c3_rate" extends="baseVoltageConcDepRate">
+        <Constant name="TIME_SCALE" dimension="time" value="1 ms"/>
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1 mV"/>
+        <Constant name="CONC_SCALE" dimension="concentration" value="1 mol_per_cm3"/>
+        <!--Note: this parameter (invc1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc1" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc2" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc3" dimension="none" value="200e-3"/>
+        <!--Note: this parameter (invo1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo1" dimension="none" value="1"/>
+        <!--Note: this parameter (invo2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo2" dimension="none" value="100e-3"/>
+        <!--Note: this parameter (diro1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro1" dimension="none" value="160e-3"/>
+        <!--Note: this parameter (diro2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro2" dimension="none" value="1.2"/>
+        <!--Note: this parameter (dirc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc2" dimension="none" value="200"/>
+        <!--Note: this parameter (dirc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc3" dimension="none" value="160"/>
+        <!--Note: this parameter (dirc4) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc4" dimension="none" value="80"/>
+        <!--Note: this parameter (diff) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diff" dimension="none" value="1"/>
+<!--Since the channel type is KS...-->
+        <Requirement name="rateScale" dimension="none"/>
+
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v / VOLT_SCALE"/>
+            <DerivedVariable name="ca_conc" dimension="none" value="caConc / CONC_SCALE"/>
+            <DerivedVariable name="inVc1" dimension="none" value="invc1"/>
+            <DerivedVariable name="inVc2" dimension="none" value="invc2"/>
+            <DerivedVariable name="inVc3" dimension="none" value="invc3"/>
+            <DerivedVariable name="inVo1" dimension="none" value="invo1"/>
+            <DerivedVariable name="inVo2" dimension="none" value="invo2"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * (dirc3 * (ca_conc*1e6/diff)) / TIME_SCALE"/>
+        </Dynamics>
+
+    </ComponentType>
+
+    <ComponentType name="Golgi_KAHP_n_beta_c3_c2_rate" extends="baseVoltageConcDepRate">
+        <Constant name="TIME_SCALE" dimension="time" value="1 ms"/>
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1 mV"/>
+        <Constant name="CONC_SCALE" dimension="concentration" value="1 mol_per_cm3"/>
+        <!--Note: this parameter (invc1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc1" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc2" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc3" dimension="none" value="200e-3"/>
+        <!--Note: this parameter (invo1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo1" dimension="none" value="1"/>
+        <!--Note: this parameter (invo2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo2" dimension="none" value="100e-3"/>
+        <!--Note: this parameter (diro1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro1" dimension="none" value="160e-3"/>
+        <!--Note: this parameter (diro2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro2" dimension="none" value="1.2"/>
+        <!--Note: this parameter (dirc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc2" dimension="none" value="200"/>
+        <!--Note: this parameter (dirc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc3" dimension="none" value="160"/>
+        <!--Note: this parameter (dirc4) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc4" dimension="none" value="80"/>
+        <!--Note: this parameter (diff) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diff" dimension="none" value="1"/>
+<!--Since the channel type is KS...-->
+        <Requirement name="rateScale" dimension="none"/>
+
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v / VOLT_SCALE"/>
+            <DerivedVariable name="ca_conc" dimension="none" value="caConc / CONC_SCALE"/>
+            <DerivedVariable name="inVc1" dimension="none" value="invc1"/>
+            <DerivedVariable name="inVc2" dimension="none" value="invc2"/>
+            <DerivedVariable name="inVc3" dimension="none" value="invc3"/>
+            <DerivedVariable name="inVo1" dimension="none" value="invo1"/>
+            <DerivedVariable name="inVo2" dimension="none" value="invo2"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * (inVc2) / TIME_SCALE"/>
+        </Dynamics>
+
+    </ComponentType>
+
+    <ComponentType name="Golgi_KAHP_n_alpha_c3_c4_rate" extends="baseVoltageConcDepRate">
+        <Constant name="TIME_SCALE" dimension="time" value="1 ms"/>
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1 mV"/>
+        <Constant name="CONC_SCALE" dimension="concentration" value="1 mol_per_cm3"/>
+        <!--Note: this parameter (invc1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc1" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc2" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc3" dimension="none" value="200e-3"/>
+        <!--Note: this parameter (invo1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo1" dimension="none" value="1"/>
+        <!--Note: this parameter (invo2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo2" dimension="none" value="100e-3"/>
+        <!--Note: this parameter (diro1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro1" dimension="none" value="160e-3"/>
+        <!--Note: this parameter (diro2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro2" dimension="none" value="1.2"/>
+        <!--Note: this parameter (dirc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc2" dimension="none" value="200"/>
+        <!--Note: this parameter (dirc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc3" dimension="none" value="160"/>
+        <!--Note: this parameter (dirc4) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc4" dimension="none" value="80"/>
+        <!--Note: this parameter (diff) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diff" dimension="none" value="1"/>
+<!--Since the channel type is KS...-->
+        <Requirement name="rateScale" dimension="none"/>
+
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v / VOLT_SCALE"/>
+            <DerivedVariable name="ca_conc" dimension="none" value="caConc / CONC_SCALE"/>
+            <DerivedVariable name="inVc1" dimension="none" value="invc1"/>
+            <DerivedVariable name="inVc2" dimension="none" value="invc2"/>
+            <DerivedVariable name="inVc3" dimension="none" value="invc3"/>
+            <DerivedVariable name="inVo1" dimension="none" value="invo1"/>
+            <DerivedVariable name="inVo2" dimension="none" value="invo2"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * (dirc4 * (ca_conc*1e6/diff)) / TIME_SCALE"/>
+        </Dynamics>
+
+    </ComponentType>
+
+    <ComponentType name="Golgi_KAHP_n_beta_c4_c3_rate" extends="baseVoltageConcDepRate">
+        <Constant name="TIME_SCALE" dimension="time" value="1 ms"/>
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1 mV"/>
+        <Constant name="CONC_SCALE" dimension="concentration" value="1 mol_per_cm3"/>
+        <!--Note: this parameter (invc1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc1" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc2" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc3" dimension="none" value="200e-3"/>
+        <!--Note: this parameter (invo1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo1" dimension="none" value="1"/>
+        <!--Note: this parameter (invo2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo2" dimension="none" value="100e-3"/>
+        <!--Note: this parameter (diro1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro1" dimension="none" value="160e-3"/>
+        <!--Note: this parameter (diro2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro2" dimension="none" value="1.2"/>
+        <!--Note: this parameter (dirc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc2" dimension="none" value="200"/>
+        <!--Note: this parameter (dirc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc3" dimension="none" value="160"/>
+        <!--Note: this parameter (dirc4) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc4" dimension="none" value="80"/>
+        <!--Note: this parameter (diff) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diff" dimension="none" value="1"/>
+<!--Since the channel type is KS...-->
+        <Requirement name="rateScale" dimension="none"/>
+
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v / VOLT_SCALE"/>
+            <DerivedVariable name="ca_conc" dimension="none" value="caConc / CONC_SCALE"/>
+            <DerivedVariable name="inVc1" dimension="none" value="invc1"/>
+            <DerivedVariable name="inVc2" dimension="none" value="invc2"/>
+            <DerivedVariable name="inVc3" dimension="none" value="invc3"/>
+            <DerivedVariable name="inVo1" dimension="none" value="invo1"/>
+            <DerivedVariable name="inVo2" dimension="none" value="invo2"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * (inVc3) / TIME_SCALE"/>
+        </Dynamics>
+
+    </ComponentType>
+
+    <ComponentType name="Golgi_KAHP_n_alpha_c3_o1_rate" extends="baseVoltageConcDepRate">
+        <Constant name="TIME_SCALE" dimension="time" value="1 ms"/>
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1 mV"/>
+        <Constant name="CONC_SCALE" dimension="concentration" value="1 mol_per_cm3"/>
+        <!--Note: this parameter (invc1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc1" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc2" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc3" dimension="none" value="200e-3"/>
+        <!--Note: this parameter (invo1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo1" dimension="none" value="1"/>
+        <!--Note: this parameter (invo2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo2" dimension="none" value="100e-3"/>
+        <!--Note: this parameter (diro1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro1" dimension="none" value="160e-3"/>
+        <!--Note: this parameter (diro2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro2" dimension="none" value="1.2"/>
+        <!--Note: this parameter (dirc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc2" dimension="none" value="200"/>
+        <!--Note: this parameter (dirc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc3" dimension="none" value="160"/>
+        <!--Note: this parameter (dirc4) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc4" dimension="none" value="80"/>
+        <!--Note: this parameter (diff) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diff" dimension="none" value="1"/>
+<!--Since the channel type is KS...-->
+        <Requirement name="rateScale" dimension="none"/>
+
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v / VOLT_SCALE"/>
+            <DerivedVariable name="ca_conc" dimension="none" value="caConc / CONC_SCALE"/>
+            <DerivedVariable name="inVc1" dimension="none" value="invc1"/>
+            <DerivedVariable name="inVc2" dimension="none" value="invc2"/>
+            <DerivedVariable name="inVc3" dimension="none" value="invc3"/>
+            <DerivedVariable name="inVo1" dimension="none" value="invo1"/>
+            <DerivedVariable name="inVo2" dimension="none" value="invo2"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * (diro1) / TIME_SCALE"/>
+        </Dynamics>
+
+    </ComponentType>
+
+    <ComponentType name="Golgi_KAHP_n_beta_o1_c3_rate" extends="baseVoltageConcDepRate">
+        <Constant name="TIME_SCALE" dimension="time" value="1 ms"/>
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1 mV"/>
+        <Constant name="CONC_SCALE" dimension="concentration" value="1 mol_per_cm3"/>
+        <!--Note: this parameter (invc1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc1" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc2" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc3" dimension="none" value="200e-3"/>
+        <!--Note: this parameter (invo1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo1" dimension="none" value="1"/>
+        <!--Note: this parameter (invo2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo2" dimension="none" value="100e-3"/>
+        <!--Note: this parameter (diro1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro1" dimension="none" value="160e-3"/>
+        <!--Note: this parameter (diro2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro2" dimension="none" value="1.2"/>
+        <!--Note: this parameter (dirc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc2" dimension="none" value="200"/>
+        <!--Note: this parameter (dirc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc3" dimension="none" value="160"/>
+        <!--Note: this parameter (dirc4) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc4" dimension="none" value="80"/>
+        <!--Note: this parameter (diff) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diff" dimension="none" value="1"/>
+<!--Since the channel type is KS...-->
+        <Requirement name="rateScale" dimension="none"/>
+
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v / VOLT_SCALE"/>
+            <DerivedVariable name="ca_conc" dimension="none" value="caConc / CONC_SCALE"/>
+            <DerivedVariable name="inVc1" dimension="none" value="invc1"/>
+            <DerivedVariable name="inVc2" dimension="none" value="invc2"/>
+            <DerivedVariable name="inVc3" dimension="none" value="invc3"/>
+            <DerivedVariable name="inVo1" dimension="none" value="invo1"/>
+            <DerivedVariable name="inVo2" dimension="none" value="invo2"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * (inVo1) / TIME_SCALE"/>
+        </Dynamics>
+
+    </ComponentType>
+
+    <ComponentType name="Golgi_KAHP_n_alpha_c4_o2_rate" extends="baseVoltageConcDepRate">
+        <Constant name="TIME_SCALE" dimension="time" value="1 ms"/>
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1 mV"/>
+        <Constant name="CONC_SCALE" dimension="concentration" value="1 mol_per_cm3"/>
+        <!--Note: this parameter (invc1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc1" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc2" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc3" dimension="none" value="200e-3"/>
+        <!--Note: this parameter (invo1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo1" dimension="none" value="1"/>
+        <!--Note: this parameter (invo2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo2" dimension="none" value="100e-3"/>
+        <!--Note: this parameter (diro1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro1" dimension="none" value="160e-3"/>
+        <!--Note: this parameter (diro2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro2" dimension="none" value="1.2"/>
+        <!--Note: this parameter (dirc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc2" dimension="none" value="200"/>
+        <!--Note: this parameter (dirc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc3" dimension="none" value="160"/>
+        <!--Note: this parameter (dirc4) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc4" dimension="none" value="80"/>
+        <!--Note: this parameter (diff) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diff" dimension="none" value="1"/>
+<!--Since the channel type is KS...-->
+        <Requirement name="rateScale" dimension="none"/>
+
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v / VOLT_SCALE"/>
+            <DerivedVariable name="ca_conc" dimension="none" value="caConc / CONC_SCALE"/>
+            <DerivedVariable name="inVc1" dimension="none" value="invc1"/>
+            <DerivedVariable name="inVc2" dimension="none" value="invc2"/>
+            <DerivedVariable name="inVc3" dimension="none" value="invc3"/>
+            <DerivedVariable name="inVo1" dimension="none" value="invo1"/>
+            <DerivedVariable name="inVo2" dimension="none" value="invo2"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * (diro2) / TIME_SCALE"/>
+        </Dynamics>
+
+    </ComponentType>
+
+    <ComponentType name="Golgi_KAHP_n_beta_o2_c4_rate" extends="baseVoltageConcDepRate">
+        <Constant name="TIME_SCALE" dimension="time" value="1 ms"/>
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1 mV"/>
+        <Constant name="CONC_SCALE" dimension="concentration" value="1 mol_per_cm3"/>
+        <!--Note: this parameter (invc1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc1" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc2" dimension="none" value="80e-3"/>
+        <!--Note: this parameter (invc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invc3" dimension="none" value="200e-3"/>
+        <!--Note: this parameter (invo1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo1" dimension="none" value="1"/>
+        <!--Note: this parameter (invo2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="invo2" dimension="none" value="100e-3"/>
+        <!--Note: this parameter (diro1) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro1" dimension="none" value="160e-3"/>
+        <!--Note: this parameter (diro2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diro2" dimension="none" value="1.2"/>
+        <!--Note: this parameter (dirc2) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc2" dimension="none" value="200"/>
+        <!--Note: this parameter (dirc3) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc3" dimension="none" value="160"/>
+        <!--Note: this parameter (dirc4) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="dirc4" dimension="none" value="80"/>
+        <!--Note: this parameter (diff) should ideally be defined only once within the ionChannel! Work in progress...-->
+        <Constant name="diff" dimension="none" value="1"/>
+<!--Since the channel type is KS...-->
+        <Requirement name="rateScale" dimension="none"/>
+
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v / VOLT_SCALE"/>
+            <DerivedVariable name="ca_conc" dimension="none" value="caConc / CONC_SCALE"/>
+            <DerivedVariable name="inVc1" dimension="none" value="invc1"/>
+            <DerivedVariable name="inVc2" dimension="none" value="invc2"/>
+            <DerivedVariable name="inVc3" dimension="none" value="invc3"/>
+            <DerivedVariable name="inVo1" dimension="none" value="invo1"/>
+            <DerivedVariable name="inVo2" dimension="none" value="invo2"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="rateScale * (inVo2) / TIME_SCALE"/>
+        </Dynamics>
+
+    </ComponentType>
+
+</neuroml>

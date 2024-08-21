@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2.3.xsd"
+         id="ChannelDensity_GHKZangEtAl">
+
+    <ComponentType name="channelDensityGHKZangEtAl"
+        extends="baseChannelDensity"
+        description="Specifies a time varying conductance density, _gDensity, which is distributed on an area of the cell, producing a current density _iDensity and whose reversal potential is calculated from the Goldman Hodgkin Katz equation. Hard coded for Ca only! See https://github.com/OpenSourceBrain/ghk-nernst. Modification of the NeuroML Component Type definition for CaT/CaP channels in Zang et al 2018.">
+
+        <!-- pcabar -->
+        <Parameter name="permeability" dimension="permeability"/>
+        <!-- note: without a vshift magnitude, the dynamics are garbage -->
+        <Parameter name="vshift" dimension="voltage"/>
+
+        <Constant name="R" dimension="idealGasConstantDims" value="8.3144621 J_per_K_per_mol" description="TODO: Make this a global constant!"/>
+        <Constant name="zCa" dimension="none" value="2" description="TODO: Make this a global constant!"/>
+        <Constant name="F" dimension="charge_per_mole" value="96485.3 C_per_mol" description="TODO: Make this a global constant!"/>
+
+        <Requirement name="temperature" dimension="temperature"/>
+        <Requirement name="caConc" dimension="concentration"/>
+        <Requirement name="caConcExt" dimension="concentration"/>
+
+        <!-- TODO: Ensure Text elements are inherited from base type -->
+        <Text name="segmentGroup" description="Which _segmentGroup_ the channelDensityGHK is placed on. If this is missing, it implies it is placed on all _segment_s of the _cell_"/>
+        <Text name="ion" description="Which ion flows through the channel. Note: ideally this needs to be a property of ionChannel only, but it's here as it makes it easier to select channelPopulations transmitting specific ions."/>
+
+        <Dynamics>
+
+            <DerivedVariable name="E" dimension="voltage"  value="(v - vshift)"/>
+            <DerivedVariable name="zeta" dimension="none"  value="(zCa * F * E) / (R * temperature)"/>
+            <DerivedVariable name="zetaExp" dimension="none"  value="exp(-zeta)"/>
+            <DerivedVariable name="cond" dimension="none"  value="1 - zetaExp"/>
+            <DerivedVariable name="cond_abs" dimension="none"  value="abs(cond)"/>
+            <!-- m^3 * h -->
+            <DerivedVariable name="channelf" dimension="none" select="ionChannel/fopen"/>
+
+            <ConditionalDerivedVariable name="iDensity"  dimension="currentDensity" exposure="iDensity">
+                <Case condition="cond_abs .lt. 1e-6" value="-1 * (channelf * permeability) * (zCa * F) * ( caConc - (caConcExt * zetaExp) ) * (1 + (zeta/2))"/>
+	            <Case value="-1 * (channelf * permeability) * (zCa * zeta * F) * ( caConc - (caConcExt * zetaExp) ) / (1 - zetaExp)"/>
+            </ConditionalDerivedVariable>
+
+        </Dynamics>
+        <Structure>
+            <ChildInstance component="ionChannel"/>
+        </Structure>
+    </ComponentType>
+
+</neuroml>

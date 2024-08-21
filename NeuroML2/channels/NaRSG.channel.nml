@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2.3.xsd"
+         id="NaRSG">
+
+
+    <!-- note: we hard code vshift values from the hoc files because generalising the rates for multiple values of vshift is not trivial -->
+
+    <ionChannelKS id="NaRSG" conductance="10pS" species="na">
+
+        <notes>Resurgent sodium channel (with blocking particle) with updated kinetic parameters from Raman and Bean
+        </notes>
+
+        <annotation>
+            <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" >
+              <rdf:Description rdf:about="Nap">
+                <dc:title>NeuroML conversion of NaRSG channel from Zang et al</dc:title>
+                <dc:description>A resurgent Na current</dc:description>
+                <bqbiol:is>
+                  <rdf:Bag>
+                      <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/nifext_2509"/>
+                  </rdf:Bag>
+                </bqbiol:is>
+                <bqbiol:isPartOf>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/sao471801888"/>
+                  </rdf:Bag>
+                </bqbiol:isPartOf>
+                <dc:source>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://modeldb.science/243446?tab=1"/>
+                  </rdf:Bag>
+                </dc:source>
+                <dc:source>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://github.com/ModelDBRepository/243446"/>
+                  </rdf:Bag>
+                </dc:source>
+                <bqmodel:is>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/nifext_2509"/>
+                  </rdf:Bag>
+                </bqmodel:is>
+                <bqmodel:isDerivedFrom>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://modeldb.science/80769"/>
+                  </rdf:Bag>
+                </bqmodel:isDerivedFrom>
+                <bqmodel:isDescribedBy>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://doi.org/10.1523/JNEUROSCI.5204-05.2006"/>
+                  </rdf:Bag>
+                </bqmodel:isDescribedBy>
+                <dc:contributor>
+                  <rdf:Bag>
+                    <rdf:li>Ankur Sinha</rdf:li>
+                    <rdf:li>https://orcid.org/0000-0001-7568-7167</rdf:li>
+                  </rdf:Bag>
+                </dc:contributor>
+                <dcterms:created>
+                  <rdf:Description>
+                    <dcterms:W3CDTF>2024-04-30</dcterms:W3CDTF>
+                  </rdf:Description>
+                </dcterms:created>
+              </rdf:Description>
+            </rdf:RDF>
+        </annotation>
+
+
+        <gateKS id="n" instances="1">
+            <q10Settings type="q10ExpTemp" q10Factor="2.7" experimentalTemp="22 degC"/>
+
+            <closedState id="C1"/>
+            <closedState id="C2"/>
+            <closedState id="C3"/>
+            <closedState id="C4"/>
+            <closedState id="C5"/>
+
+            <closedState id="I1"/>
+            <closedState id="I2"/>
+            <closedState id="I3"/>
+            <closedState id="I4"/>
+            <closedState id="I5"/>
+            <closedState id="I6"/>
+            <closedState id="B"/>
+
+            <openState id="O"/>
+
+            <forwardTransition id="f01" from="C1" to="C2" >
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="4" alpha_beta="150 per_ms" x="20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
+            </forwardTransition>
+            <reverseTransition id="b01" from="C1" to="C2" >
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="1" alpha_beta="3 per_ms" x="-20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
+            </reverseTransition>
+
+
+            <forwardTransition id="f02" from="C2" to="C3" >
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="3" alpha_beta="150 per_ms" x="20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
+            </forwardTransition>
+            <reverseTransition id="b02" from="C2" to="C3" >
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="2" alpha_beta="3 per_ms" x="-20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
+            </reverseTransition>
+
+
+            <forwardTransition id="f03" from="C3" to="C4" >
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="2" alpha_beta="150 per_ms" x="20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
+            </forwardTransition>
+            <reverseTransition id="b03" from="C3" to="C4" >
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="3" alpha_beta="3 per_ms" x="-20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
+            </reverseTransition>
+
+
+            <forwardTransition id="f04" from="C4" to="C5" >
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="1" alpha_beta="150 per_ms" x="20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
+            </forwardTransition>
+            <reverseTransition id="b04" from="C4" to="C5" >
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="4" alpha_beta="3 per_ms" x="-20" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
+            </reverseTransition>
+
+
+            <forwardTransition id="f0O" from="C5" to="O" >
+                <rate type="Generic_NaRSG_const_rate" const="150 per_ms"  o_on_off="1 per_ms" c_on_off="1 per_ms" power="0"/>
+            </forwardTransition>
+            <reverseTransition id="b0O" from="C5" to="O" >
+                <rate type="Generic_NaRSG_const_rate" const="40 per_ms"  o_on_off="1 per_ms" c_on_off="1 per_ms" power="0"/>
+            </reverseTransition>
+
+
+            <forwardTransition id="fip" from="O" to="B" >
+                <rate type="Generic_NaRSG_const_rate" const="1.75 per_ms"  o_on_off="1 per_ms" c_on_off="1 per_ms" power="1"/>
+            </forwardTransition>
+            <reverseTransition id="bip" from="O" to="B" >
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="0.03" alpha_beta="1 per_ms" x="-25" vshift1="0" vshift2="0" o_on_off="1 per_ms" c_on_off="1 per_ms"/>
+            </reverseTransition>
+
+
+            <forwardTransition id="f11" from="I1" to="I2" >
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="4" alpha_beta="150 per_ms" o_on_off="0.75 per_ms" c_on_off="0.005 per_ms" vshift1="0" x="20" vshift2="0"/>
+            </forwardTransition>
+            <reverseTransition id="b11" from="I1" to="I2" >
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="1" alpha_beta="3 per_ms" x="-20" vshift1="0" vshift2="0" o_on_off="0.005 per_ms" c_on_off="0.5 per_ms"/>
+            </reverseTransition>
+
+
+            <forwardTransition id="f12" from="I2" to="I3" >
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="3" alpha_beta="150 per_ms" o_on_off="0.75 per_ms" c_on_off="0.005 per_ms" vshift1="0" x="20" vshift2="0"/>
+            </forwardTransition>
+            <reverseTransition id="b12" from="I2" to="I3" >
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="2" alpha_beta="3 per_ms" x="-20" vshift1="0" vshift2="0" o_on_off="0.005 per_ms" c_on_off="0.5 per_ms"/>
+            </reverseTransition>
+
+
+            <forwardTransition id="f13" from="I3" to="I4" >
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="2" alpha_beta="150 per_ms" o_on_off="0.75 per_ms" c_on_off="0.005 per_ms" vshift1="0" x="20" vshift2="0"/>
+            </forwardTransition>
+            <reverseTransition id="b13" from="I3" to="I4" >
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="3" alpha_beta="3 per_ms" x="-20" vshift1="0" vshift2="0" o_on_off="0.005 per_ms" c_on_off="0.5 per_ms"/>
+            </reverseTransition>
+
+
+            <forwardTransition id="f14" from="I4" to="I5" >
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="1" alpha_beta="150 per_ms" o_on_off="0.75 per_ms" c_on_off="0.005 per_ms" vshift1="0" x="20" vshift2="0"/>
+            </forwardTransition>
+            <reverseTransition id="b14" from="I4" to="I5" >
+                <rate type="Generic_NaRSG_exp_rate_vshift" const="4" alpha_beta="3 per_ms" x="-20" vshift1="0" vshift2="0" o_on_off="0.005 per_ms" c_on_off="0.5 per_ms"/>
+            </reverseTransition>
+
+
+            <forwardTransition id="f1n" from="I5" to="I6" >
+                <rate type="Generic_NaRSG_const_rate" const="150 per_ms"  o_on_off="1 per_ms" c_on_off="1 per_ms" power="0"/>
+            </forwardTransition>
+            <reverseTransition id="b1n" from="I5" to="I6" >
+                <rate type="Generic_NaRSG_const_rate" const="40 per_ms"  o_on_off="1 per_ms" c_on_off="1 per_ms" power="0"/>
+            </reverseTransition>
+
+
+            <forwardTransition id="fi1" from="C1" to="I1" >
+                <rate type="Generic_NaRSG_const_rate" const="0.005 per_ms"  o_on_off="0.75 per_ms" c_on_off="0.005 per_ms" power="0"/>
+            </forwardTransition>
+            <reverseTransition id="bi1" from="C1" to="I1" >
+                <rate type="Generic_NaRSG_const_rate" const="0.5 per_ms"  o_on_off="1 per_ms" c_on_off="1 per_ms" power="0"/>
+            </reverseTransition>
+
+
+            <forwardTransition id="fi2" from="C2" to="I2" >
+                <rate type="Generic_NaRSG_const_rate" const="0.005 per_ms"  o_on_off="0.75 per_ms" c_on_off="0.005 per_ms" power="1"/>
+            </forwardTransition>
+            <reverseTransition id="bi2" from="C2" to="I2" >
+                <rate type="Generic_NaRSG_const_rate" const="0.5 per_ms"  o_on_off="0.005 per_ms" c_on_off="0.5 per_ms" power="1"/>
+            </reverseTransition>
+
+
+            <forwardTransition id="fi3" from="C3" to="I3" >
+                <rate type="Generic_NaRSG_const_rate" const="0.005 per_ms"  o_on_off="0.75 per_ms" c_on_off="0.005 per_ms" power="2"/>
+            </forwardTransition>
+            <reverseTransition id="bi3" from="C3" to="I3" >
+                <rate type="Generic_NaRSG_const_rate" const="0.5 per_ms"  o_on_off="0.005 per_ms" c_on_off="0.5 per_ms" power="2"/>
+            </reverseTransition>
+
+
+            <forwardTransition id="fi4" from="C4" to="I4" >
+                <rate type="Generic_NaRSG_const_rate" const="0.005 per_ms"  o_on_off="0.75 per_ms" c_on_off="0.005 per_ms" power="3"/>
+            </forwardTransition>
+            <reverseTransition id="bi4" from="C4" to="I4" >
+                <rate type="Generic_NaRSG_const_rate" const="0.5 per_ms"  o_on_off="0.005 per_ms" c_on_off="0.5 per_ms" power="3"/>
+            </reverseTransition>
+
+
+            <forwardTransition id="fi5" from="C5" to="I5" >
+                <rate type="Generic_NaRSG_const_rate" const="0.005 per_ms"  o_on_off="0.75 per_ms" c_on_off="0.005 per_ms" power="4"/>
+            </forwardTransition>
+            <reverseTransition id="bi5" from="C5" to="I5" >
+                <rate type="Generic_NaRSG_const_rate" const="0.5 per_ms"  o_on_off="0.005 per_ms" c_on_off="0.5 per_ms" power="4"/>
+            </reverseTransition>
+
+            <forwardTransition id="fin" from="O" to="I6" >
+                <rate type="Generic_NaRSG_const_rate" const="0.75 per_ms"  o_on_off="1 per_ms" c_on_off="1 per_ms" power="0"/>
+            </forwardTransition>
+            <reverseTransition id="bin" from="O" to="I6" >
+                <rate type="Generic_NaRSG_const_rate" const="0.005 per_ms"  o_on_off="1 per_ms" c_on_off="1 per_ms" power="0"/>
+            </reverseTransition>
+
+
+
+        </gateKS>
+
+    </ionChannelKS>
+
+    <ComponentType name="Generic_NaRSG_const_rate" extends="baseVoltageDepRate">
+
+        <Parameter name="const" dimension="per_time"/>
+        <Parameter name="o_on_off" dimension="per_time"/>
+        <Parameter name="c_on_off" dimension="per_time"/>
+        <Parameter name="power" dimension="none"/>
+
+        <Requirement name="rateScale" dimension="none"/>
+
+        <Dynamics>
+            <DerivedVariable name="al_be_fac" dimension="none" value="(o_on_off/c_on_off)^0.25" />
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="const * al_be_fac^power * rateScale"/>
+        </Dynamics>
+
+    </ComponentType>
+    <ComponentType name="Generic_NaRSG_exp_rate_vshift" extends="baseVoltageDepRate">
+
+        <Parameter name="const" dimension="none"/>
+        <Parameter name="alpha_beta" dimension="per_time"/>
+        <Parameter name="o_on_off" dimension="per_time"/>
+        <Parameter name="c_on_off" dimension="per_time"/>
+        <Parameter name="vshift1" dimension="none"/>
+        <Parameter name="vshift2" dimension="none"/>
+        <Parameter name="x" dimension="none"/>
+
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1mV" />
+        <Requirement name="rateScale" dimension="none"/>
+
+        <Dynamics>
+            <DerivedVariable name="al_be_fac" dimension="none" value="(o_on_off/c_on_off)^0.25" />
+            <DerivedVariable name="V" dimension="none" value="v/VOLT_SCALE" />
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="const * rateScale * alpha_beta * al_be_fac * exp((V + vshift1)/(x + vshift2))"/>
+        </Dynamics>
+
+    </ComponentType>
+
+
+</neuroml>

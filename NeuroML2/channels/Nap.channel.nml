@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2.3.xsd" id="Nap">
+
+    <notes>NeuroML file containing a single Channel description</notes>
+
+    <ionChannel id="Nap" conductance="10pS" type="ionChannelHH" species="k">
+
+        <notes>A persistent Na+ current from Baker 2005, parameter assignments and formula's from page 854.
+    </notes>
+
+        <annotation>
+            <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" >
+              <rdf:Description rdf:about="Nap">
+                <dc:title>NeuroML conversion of Nap channel from Zang et al</dc:title>
+                <dc:description>A persistent Na current</dc:description>
+                <bqbiol:is>
+                  <rdf:Bag>
+                <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/nifext_2508"/>
+                  </rdf:Bag>
+                </bqbiol:is>
+                <bqbiol:isPartOf>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/sao471801888"/>
+                  </rdf:Bag>
+                </bqbiol:isPartOf>
+                <dc:source>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://modeldb.science/243446?tab=1"/>
+                  </rdf:Bag>
+                </dc:source>
+                <dc:source>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://github.com/ModelDBRepository/243446"/>
+                  </rdf:Bag>
+                </dc:source>
+                <bqmodel:is>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/nifext_2509"/>
+                  </rdf:Bag>
+                </bqmodel:is>
+                <bqmodel:isDerivedFrom>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://modeldb.science/80769"/>
+                  </rdf:Bag>
+                </bqmodel:isDerivedFrom>
+                <bqmodel:isDescribedBy>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://doi.org/10.1523/JNEUROSCI.5204-05.2006"/>
+                  </rdf:Bag>
+                </bqmodel:isDescribedBy>
+                <dc:contributor>
+                  <rdf:Bag>
+                    <rdf:li>Ankur Sinha</rdf:li>
+                    <rdf:li>https://orcid.org/0000-0001-7568-7167</rdf:li>
+                  </rdf:Bag>
+                </dc:contributor>
+                <dcterms:created>
+                  <rdf:Description>
+                    <dcterms:W3CDTF>2024-04-30</dcterms:W3CDTF>
+                  </rdf:Description>
+                </dcterms:created>
+              </rdf:Description>
+            </rdf:RDF>
+        </annotation>
+
+        <!-- the mod file definds an h state but no dynamics -->
+        <gate id="m" type="gateHHratesInf" instances="3">
+            <q10Settings type="q10ExpTemp" experimentalTemp="22degC" q10Factor="2.7" />
+            <forwardRate type="HHSigmoidRate" rate="17.235 per_ms" midpoint="-27.58mV" scale="11.47mV"/>
+            <reverseRate type="HHSigmoidRate" rate="17.235 per_ms" midpoint="-86.2mV" scale="-19.8mV"/>
+            <steadyState type="HHSigmoidVariable" rate="1" midpoint="-66mV" scale="5mV" />
+        </gate>
+
+    </ionChannel>
+
+
+</neuroml>

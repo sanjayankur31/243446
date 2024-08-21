@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2.3.xsd" id="Kv1">
+
+    <notes>NeuroML file containing a single Channel description</notes>
+
+    <ionChannel id="Kv1" conductance="10pS" type="ionChannelHH" species="k">
+
+        <notes>Voltage-gated low threshold potassium current from Kv1 subunits
+
+The time kinetics are from the Original paper (Akeman reduce the time constatant to about 1/3);
+activation curve are from original paper; inactivation data are from Stephane's paper Fig 6E
+(This current should be a combination of kv1.2 which is not sensitive to TEA and kv4.3 which is not completely blocked).
+Not sure this steady state inactivation curve is right, but it would not affect the normal firing of PC. It is used to
+reproduce history dependence of development of secondary spikes. Kv4 seems not to be able to do it according to its fast inactivation kinetics.
+Ik1 inactivates very slow. We set the inactivation time constant to 1000 ms.
+NEURON implementation of a potassium channel from Kv1.1 subunits
+We should also refer to Gating, modulation and subunit composition of voltage-gated K+channels in dendritic inhibitory interneurones of rathippocampus
+In this paper,they observe a slow delayed rectifier K current. This current is surprisingly not sensitive to 4AP,but sensitive to high does
+TEA. Compared with the paper by Marco Martin 5698 • The Journal of Neuroscience, July 2, 2003 • 23(13):5698 –5707, the K currents measured in the
+dendrite, about 20% of the K currents is still resistant to even 3 mM 4-AP. However, 10 mM TEA can decrease the K currents to only 10%, suggesting a K
+current sensitive  to high concentration TEA instead of 4AP, similar with the work by CC Lien. I guess in the soma, there should be IK1.
+
+Kinetic data taken from: Zerr et al., J.Neurosci. 18 (1998) 2842
+Vhalf = -28.8 +/- 2.3 mV; k = 8.1 +/- 0.9 mV
+
+The voltage dependency of the rate constants was approximated by:
+
+alpha = ca * exp(-(v+cva)/cka)
+beta = cb * exp(-(v+cvb)/ckb)
+
+Parameters ca, cva, cka, cb, cvb, ckb
+are defined in the CONSTANT block.
+
+Laboratory for Neuronal Circuit Dynamics
+RIKEN Brain Science Institute, Wako City, Japan
+http://www.neurodynamics.brain.riken.jp
+
+Reference: Akemann and Knoepfel, J.Neurosci. 26 (2006) 4602
+Date of Implementation: April 2005
+Contact: akemann@brain.riken.jp
+    </notes>
+
+        <annotation>
+            <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" >
+              <rdf:Description rdf:about="Kv1">
+                <dc:title>NeuroML conversion of Kv1 channel from Zang et al</dc:title>
+                <dc:description>Voltage-gated low threshold potassium current from Kv1 subunits</dc:description>
+                <bqbiol:is>
+                  <rdf:Bag>
+                <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/nifext_2511"/>
+                  </rdf:Bag>
+                </bqbiol:is>
+                <bqbiol:is>
+                  <rdf:Bag>
+                <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/nifext_2673"/>
+                  </rdf:Bag>
+                </bqbiol:is>
+                <bqbiol:isPartOf>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/sao471801888"/>
+                  </rdf:Bag>
+                </bqbiol:isPartOf>
+                <dc:source>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://modeldb.science/243446?tab=1"/>
+                  </rdf:Bag>
+                </dc:source>
+                <dc:source>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://github.com/ModelDBRepository/243446"/>
+                  </rdf:Bag>
+                </dc:source>
+                <bqmodel:isDerivedFrom>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://modeldb.science/80769"/>
+                  </rdf:Bag>
+                </bqmodel:isDerivedFrom>
+                <bqmodel:isDescribedBy>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://doi.org/10.1523/JNEUROSCI.5204-05.2006"/>
+                  </rdf:Bag>
+                </bqmodel:isDescribedBy>
+                <dc:creator>
+                  <rdf:Bag>
+                    <rdf:li>Walther Akemann</rdf:li>
+                    <rdf:li>akemann at brain.riken.jp</rdf:li>
+                  </rdf:Bag>
+                </dc:creator>
+                <dc:contributor>
+                  <rdf:Bag>
+                    <rdf:li>Ankur Sinha</rdf:li>
+                    <rdf:li>https://orcid.org/0000-0001-7568-7167</rdf:li>
+                  </rdf:Bag>
+                </dc:contributor>
+                <dcterms:created>
+                  <rdf:Description>
+                    <dcterms:W3CDTF>2024-04-26</dcterms:W3CDTF>
+                  </rdf:Description>
+                </dcterms:created>
+              </rdf:Description>
+            </rdf:RDF>
+        </annotation>
+
+        <gate id="n" type="gateHHrates" instances="4">
+            <q10Settings type="q10ExpTemp" experimentalTemp="22degC" q10Factor="3" />
+            <forwardRate type="HHExpRate" rate="0.12889 per_ms" midpoint="-45mV" scale="33.90877mV"/>
+            <reverseRate type="HHExpRate" rate="0.12889 per_ms" midpoint="-45mV" scale="-12.42101mV"/>
+        </gate>
+        <gate id="h" type="gateHHtauInf" instances="1">
+            <q10Settings type="q10ExpTemp" experimentalTemp="22degC" q10Factor="3" />
+            <timeCourse type="fixedTimeCourse" tau="1000ms" />
+            <steadyState type="HHSigmoidVariable" rate="1" midpoint="-66.16mV" scale="-6.1881mV"/>
+        </gate>
+
+    </ionChannel>
+
+
+</neuroml>

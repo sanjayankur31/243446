@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2.3.xsd" id="BK">
+
+    <notes>NeuroML file containing a single Channel description</notes>
+
+    <ionChannel id="CaP" conductance="10pS" type="ionChannelHH" species="ca">
+        <notes>P type calcium channel
+            According to Benton and Raman data
+            lower threshold but relatively large time constant compared with Sungho's model (According to Bruce Bean)
+            Also the ssa is steep. In this model, it is better not to shift the SSA to the left.
+            time speeded up by 2 times May 9 2016 (no longer)
+        </notes>
+
+        <gateHHtauInf id="m" instances="1">
+            <q10Settings type="q10ExpTemp" q10Factor="3" experimentalTemp="22 degC"/>
+            <!-- vshift is set in the purkinje demo hoc file but not in the mod file -->
+            <timeCourse type="CaP_tau" vshift="-5.0 mV" />
+
+            <!-- inf does not take q10 into account in mod: assuming bug for the moment -->
+            <steadyState type="CaP_inf" vshift="-5.0 mV" />
+        </gateHHtauInf>
+    </ionChannel>
+
+     <ComponentType name="CaP_tau"
+         extends="baseVoltageDepTime">
+
+        <Parameter name="vshift" dimension="voltage"/>
+        <Constant name="TIME_SCALE" value="1s" dimension="time" />
+        <Constant name="scale" value="14 mV" dimension="voltage" />
+        <Constant name="vshift30" value="30 mV" dimension="voltage" />
+
+        <Dynamics>
+            <DerivedVariable name="t" dimension="time" exposure="t" value="(0.0002 + 0.0007031 * exp(-((v + vshift30 + vshift)/scale)^2)) * TIME_SCALE"/>
+
+        </Dynamics>
+
+    </ComponentType>
+
+    <ComponentType name="CaP_inf"
+        extends="baseVoltageDepVariable">
+
+        <Parameter name="vshift" dimension="voltage"/>
+        <Constant name="cv" dimension="voltage" value="30.5 mV" />
+        <Constant name="ck" dimension="voltage" value="4.113 mV" />
+
+        <Constant name="TIME_SCALE" value="1s" dimension="time" />
+        <Dynamics>
+            <DerivedVariable name="x" exposure="x" dimension="per_time" value="1/(1 + exp(-(v + cv + vshift)/ck)) / TIME_SCALE"/>
+        </Dynamics>
+    </ComponentType>
+
+</neuroml>

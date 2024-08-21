@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2.3.xsd" id="BK">
+
+    <notes>NeuroML file containing a single Channel description</notes>
+
+    <!-- this is not the standard calcium, since they don't want it to contribute to the standard calcium current or its concentration, so call the ion something else -->
+    <ionChannel id="CaT" conductance="10pS" type="ionChannelHH" species="Caion_CaT">
+        <notes>Low threshold calcium current Cerebellum Purkinje Cell Model
+Q10 is estimated from this work, Temperature dependence of T-type Calcium channel gating, NEUROSCIENCE
+written by Yunliang Zang according to the data provided by Stephane Diudone, compared with the summarised data from stephane,
+T type calcium channels has two gates. so the activation curve was refitted.
+The junction potential is -6.6 mV
+It does not work even changing it back to cai
+April 16th, 2015
+This version does not contribute to the calcium concentration and BK together with SK.
+    </notes>
+
+        <gateHHtauInf id="m" instances="3">
+            <q10Settings type="q10ExpTemp" q10Factor="1.0913" experimentalTemp="32 degC"/>
+
+            <timeCourse type="CaT_tau" A_tau="-2.3199 per_ms" B_tau="2.5712 per_ms" C_tau="1.2757 per_ms" vshift="-6.6 mV" midpoint1="-48.048 mV" midpoint2="-28.386 mV" scale1=" 30.655 mV" scale2="9.6306 mV"/>
+            <steadyState type="CaT_inf" rate="1.0" midpoint="-42.206 mV" vshift="-6.6 mV" scale="-4.7056mV" power="0.33333"/>
+        </gateHHtauInf>
+
+        <gateHHtauInf id="h" instances="1">
+            <q10Settings type="q10ExpTemp" q10Factor="1.0913" experimentalTemp="32 degC"/>
+
+            <timeCourse type="CaT_tau" A_tau="0.17746 per_ms" B_tau="0.13402 per_ms" C_tau="0.0076 per_ms" vshift="-6.6 mV" midpoint1="-58.535mV" midpoint2="-101.436mV" scale1="6.2692 mV" scale2="-5.5845 mV"/>
+            <steadyState type="CaT_inf" rate="1.0" midpoint="-75.118 mV" vshift="-6.6 mV" scale="6.4635 mV" power="1"/>
+        </gateHHtauInf>
+    </ionChannel>
+
+     <ComponentType name="CaT_tau"
+         extends="baseVoltageDepTime">
+
+        <Parameter name="A_tau" dimension="per_time"/>
+        <Parameter name="B_tau" dimension="per_time"/>
+        <Parameter name="C_tau" dimension="per_time"/>
+        <Parameter name="vshift" dimension="voltage"/>
+        <Parameter name="midpoint1" dimension="voltage"/>
+        <Parameter name="midpoint2" dimension="voltage"/>
+        <Parameter name="scale1" dimension="voltage"/>
+        <Parameter name="scale2" dimension="voltage"/>
+
+        <Dynamics>
+            <DerivedVariable name="t" dimension="time" exposure="t" value="1.0 / ( C_tau + (A_tau / (1 + exp(-(v - midpoint1 + vshift) / scale1))) + (B_tau / (1 + exp(-(v - midpoint2 + vshift) / scale2)))) "/>
+
+        </Dynamics>
+
+    </ComponentType>
+
+    <ComponentType name="CaT_inf"
+        extends="baseVoltageDepVariable">
+
+        <Parameter name="rate" dimension="none"/>
+        <Parameter name="midpoint" dimension="voltage"/>
+        <Parameter name="vshift" dimension="voltage"/>
+        <Parameter name="scale" dimension="voltage"/>
+        <Parameter name="power" dimension="none"/>
+        <Constant name="TIME_SCALE" value="1s" dimension="time" />
+        <Dynamics>
+            <DerivedVariable name="x" exposure="x" dimension="per_time" value="(rate / (1 + exp((v - midpoint - vshift) / scale))^power) / TIME_SCALE"/>
+        </Dynamics>
+    </ComponentType>
+
+</neuroml>

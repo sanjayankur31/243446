@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2.3.xsd" id="Kv4s">
+
+    <notes>NeuroML file containing a single Channel description</notes>
+
+    <!-- vshift is mentioned in mod file, but is set to 0 in hoc -->
+    <ionChannel id="Kv4s" conductance="10pS" type="ionChannelHH" species="k">
+
+        <notes>
+NEURON implementation of a potassium channel from Kv4 subunits
+Kv4 activation from Sacco inactivation from SD
+Yunliang Zang April 16th 2015
+        </notes>
+
+        <annotation>
+            <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" >
+              <rdf:Description rdf:about="Kv4s">
+                <dc:title>NeuroML conversion of Kv4s channel from Zang et al</dc:title>
+                <dc:description>Voltage-gated potassium channel with high threshold and fast activation/deactivation kinetics</dc:description>
+                <bqbiol:is>
+                  <rdf:Bag>
+                <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/nifext_2511"/>
+                  </rdf:Bag>
+                </bqbiol:is>
+                <bqbiol:is>
+                  <rdf:Bag>
+                <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/nifext_2735"/>
+                  </rdf:Bag>
+                </bqbiol:is>
+                <bqbiol:isPartOf>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="http://uri.neuinfo.org/nif/nifstd/sao471801888"/>
+                  </rdf:Bag>
+                </bqbiol:isPartOf>
+                <dc:source>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://modeldb.science/243446?tab=1"/>
+                  </rdf:Bag>
+                </dc:source>
+                <dc:source>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://github.com/ModelDBRepository/243446"/>
+                  </rdf:Bag>
+                </dc:source>
+                <bqmodel:isDerivedFrom>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://modeldb.science/80769"/>
+                  </rdf:Bag>
+                </bqmodel:isDerivedFrom>
+                <bqmodel:isDescribedBy>
+                  <rdf:Bag>
+                    <rdf:li rdf:resource="https://doi.org/10.1523/JNEUROSCI.5204-05.2006"/>
+                  </rdf:Bag>
+                </bqmodel:isDescribedBy>
+                <dc:creator>
+                  <rdf:Bag>
+                    <rdf:li>Yunliang Zang</rdf:li>
+                  </rdf:Bag>
+                </dc:creator>
+                <dc:contributor>
+                  <rdf:Bag>
+                    <rdf:li>Ankur Sinha</rdf:li>
+                    <rdf:li>https://orcid.org/0000-0001-7568-7167</rdf:li>
+                  </rdf:Bag>
+                </dc:contributor>
+                <dcterms:created>
+                  <rdf:Description>
+                    <dcterms:W3CDTF>2024-04-29</dcterms:W3CDTF>
+                  </rdf:Description>
+                </dcterms:created>
+              </rdf:Description>
+            </rdf:RDF>
+        </annotation>
+
+        <gate id="n" type="gateHHratesInf" instances="4">
+            <q10Settings type="q10ExpTemp" experimentalTemp="23degC" q10Factor="3" />
+            <forwardRate type="HHExpRate" rate="0.15743 per_ms" midpoint="-57mV" scale="32.19976mV"/>
+            <reverseRate type="HHExpRate" rate="0.15743 per_ms" midpoint="-57mV" scale="-37.51346mV"/>
+            <steadyState type="HHSigmoidVariable" rate="1" midpoint="-49mV" scale="12.5mV"/>
+        </gate>
+
+        <gate id="h" type="gateHHtauInf" instances="1">
+            <q10Settings type="q10ExpTemp" experimentalTemp="23degC" q10Factor="3" />
+            <timeCourse type="fixedTimeCourse" tau="100 ms" />
+            <steadyState type="HHSigmoidVariable" rate="1" midpoint="-75.30348mV" scale="-6.06329mV"/>
+        </gate>
+    </ionChannel>
+
+
+</neuroml>
